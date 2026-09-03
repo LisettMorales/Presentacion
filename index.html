@@ -899,7 +899,7 @@ h2 {
     border: 1.5px solid #C8C4BC;
     box-shadow: none;
 
-    transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
+    transition: background .35s ease, border-color .35s ease, box-shadow .35s ease, transform .35s ease;
 }
 
 /* Each dot "lights up" terracotta just before its
@@ -913,6 +913,19 @@ h2 {
     background: var(--terracotta);
     border-color: var(--terracotta);
     box-shadow: 0 0 0 3px rgba(201, 111, 82, .15);
+}
+
+/* Resalta el punto/capítulo cuya foto está mostrándose
+   en ese momento en el carrusel del Chapter 02. */
+.timeline-item.current .timeline-title {
+    color: var(--terracotta);
+}
+
+.timeline-item.current::before {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    box-shadow: 0 0 0 5px rgba(201, 111, 82, .22);
+    transform: scale(1.15);
 }
 
 .timeline-year {
@@ -1586,9 +1599,9 @@ h2 {
         <div class="map-stage" id="mapStage">
 
             <img
-                class="world-map.png"
+                class="world-map-img"
                 src="world-map.png"
-                alt="world-map.png"
+                alt="World map"
             >
 
             <svg
@@ -2197,13 +2210,13 @@ h2 {
 
             <!-- CHAPTER 3 — 4 PHOTO SLOTS -->
             <!-- ===== IMAGEN CHAPTER 03 · KOREA · FOTO 01: images/korea-1.jpg ===== -->
-            <div class="korea-carousel-slide" style="background-image: url('images/korea-1.jpg');"></div>
+            <div class="korea-carousel-slide" style="background-image: url('Sydne_02.jpeg');"></div>
 
             <!-- ===== IMAGEN CHAPTER 03 · KOREA · FOTO 02: images/korea-2.jpg ===== -->
-            <div class="korea-carousel-slide" style="background-image: url('images/korea-2.jpg');"></div>
+            <div class="korea-carousel-slide" style="background-image: url('Portada.jpg');"></div>
 
             <!-- ===== IMAGEN CHAPTER 03 · KOREA · FOTO 03: images/korea-3.jpg ===== -->
-            <div class="korea-carousel-slide" style="background-image: url('images/korea-3.jpg');"></div>
+            <div class="korea-carousel-slide" style="background-image: url(Trabajo.jpg');"></div>
 
             <!-- ===== IMAGEN CHAPTER 03 · KOREA · FOTO 04: images/korea-4.jpg ===== -->
             <div class="korea-carousel-slide" style="background-image: url('images/korea-4.jpg');"></div>
@@ -2912,9 +2925,9 @@ const destinations = {
 
         images: [
             /* ===== IMAGEN DESTINO · MACAU · FOTO 1: Viaje_03.jpg ===== */
-            "Viaje_03.jpg",
+            "Macau_02.jpeg",
              /* ===== IMAGEN DESTINO · MACAU · FOTO 2: images/macau-2.jpg ===== */
-            "images/macau-2.jpg"
+            "Macau_01.jpeg"
         ],
 
         text:
@@ -2933,7 +2946,7 @@ const destinations = {
 
         images: [
             /* ===== IMAGEN DESTINO · HONG-KONG · FOTO 1: images/hong-kong-1.jpg ===== */
-            "images/hong-kong-1.jpg",
+            "hongkong.jpeg",
              /* ===== IMAGEN DESTINO · HONG-KONG · FOTO 2: images/hong-kong-2.jpg ===== */
             "images/hong-kong-2.jpg"
         ],
@@ -2954,7 +2967,7 @@ const destinations = {
 
         images: [
             /* ===== IMAGEN DESTINO · SINGAPORE · FOTO 1: images/singapore-1.jpg ===== */
-            "images/singapore-1.jpg",
+            "Singapure.jpeg",
              /* ===== IMAGEN DESTINO · SINGAPORE · FOTO 2: images/singapore-2.jpg ===== */
             "images/singapore-2.jpg"
         ],
@@ -2975,9 +2988,9 @@ const destinations = {
 
         images: [
             /* ===== IMAGEN DESTINO · AUSTRALIA · FOTO 1: images/australia-1.jpg ===== */
-            "images/australia-1.jpg",
+            "Familia_01.jpg",
              /* ===== IMAGEN DESTINO · AUSTRALIA · FOTO 2: images/australia-2.jpg ===== */
-            "images/australia-2.jpg"
+            "Familia_01.jpg"
         ],
 
         text:
@@ -2996,7 +3009,7 @@ const destinations = {
 
         images: [
             /* ===== IMAGEN DESTINO · DUBAI · FOTO 1: Dubai_01.JPG ===== */
-            "Dubai_01.JPG",
+            "Dubai_03.jpeg",
              /* ===== IMAGEN DESTINO · DUBAI · FOTO 2: Dubai_02.JPG ===== */
             "Dubai_02.JPG"
         ],
@@ -3017,9 +3030,9 @@ const destinations = {
 
         images: [
             /* ===== IMAGEN DESTINO · MALAYSIA · FOTO 1: images/malaysia-1.jpg ===== */
-            "images/malaysia-1.jpg",
+            "Dubai_01.JPG",
              /* ===== IMAGEN DESTINO · MALAYSIA · FOTO 2: images/malaysia-2.jpg ===== */
-            "images/malaysia-2.jpg"
+            "Malayasia.jpeg"
         ],
 
         text:
@@ -3040,7 +3053,7 @@ const destinations = {
             /* ===== IMAGEN DESTINO · THAILAND · FOTO 1: Thailandia.jpg ===== */
             "Thailandia.jpg",
              /* ===== IMAGEN DESTINO · THAILAND · FOTO 2: images/thailand-2.jpg ===== */
-            "images/thailand-2.jpg"
+            "Tailandia_01.jpeg"
         ],
 
         text:
@@ -3898,6 +3911,12 @@ function initChapterCarousel(config) {
                 i === index
             );
         });
+
+        // Lets the caller (Chapter 02's timeline) react every
+        // time the photo changes — automatically or by click.
+        if (typeof config.onChange === "function") {
+            config.onChange(index);
+        }
     }
 
     function restartTimer() {
@@ -3977,7 +3996,11 @@ initChapterCarousel({
     trackId: "chapter2CarouselTrack",
     dotsId: "chapter2CarouselDots",
     prevId: "chapter2Prev",
-    nextId: "chapter2Next"
+    nextId: "chapter2Next",
+    onChange: (index) => {
+        chapterCurrentPhotoIndex = index;
+        syncTimelineToPhoto(index);
+    }
 });
 
 
@@ -4113,6 +4136,7 @@ const chapterDotDelays = [240, 1000, 1760, 2520];
 
 let chapterAnimationRunning = false;
 let chapterRunnerTimeouts = [];
+let chapterCurrentPhotoIndex = 0;
 
 
 function resetChapterAnimation() {
@@ -4127,6 +4151,10 @@ function resetChapterAnimation() {
     chapterRunnerTimeouts = [];
 
     chapterTimeline.classList.remove("animate");
+
+    chapterItems.forEach(item => {
+        item.classList.remove("current");
+    });
 
     timelineRunner.style.opacity = 0;
     timelineRunner.style.transition = "none";
@@ -4196,11 +4224,63 @@ function runTimelineRunner() {
     chapterRunnerTimeouts.push(
         setTimeout(() => {
 
-            timelineRunner.style.opacity = 0;
+            // Termina la revelación inicial y pasa a modo
+            // "sincronizado": el runner y el punto activo ahora
+            // siguen la foto que esté mostrando el carrusel.
             chapterAnimationRunning = false;
+
+            highlightTimelineItem(chapterCurrentPhotoIndex);
 
         }, chapterDotDelays[chapterDotDelays.length - 1] + 1600)
     );
+
+}
+
+
+/*
+   Mantiene la línea vertical y el punto "activo" coincidiendo
+   con la foto que el carrusel del Chapter 02 está mostrando.
+   Se llama cada vez que esa foto cambia (automáticamente cada
+   5s, o al hacer clic en flechas/puntos del carrusel).
+*/
+
+function syncTimelineToPhoto(index) {
+
+    if (!chapterTimeline || chapterAnimationRunning) {
+        return;
+    }
+
+    highlightTimelineItem(index);
+
+}
+
+
+function highlightTimelineItem(index) {
+
+    if (!chapterItems.length || index < 0 || index >= chapterItems.length) {
+        return;
+    }
+
+    chapterItems.forEach((item, i) => {
+
+        item.classList.toggle(
+            "current",
+            i === index
+        );
+
+    });
+
+    if (timelineRunner) {
+
+        timelineRunner.style.transition =
+            "top .6s cubic-bezier(.65,0,.35,1), opacity .3s ease";
+
+        timelineRunner.style.top =
+            `${chapterItems[index].offsetTop + 9}px`;
+
+        timelineRunner.style.opacity = 1;
+
+    }
 
 }
 
