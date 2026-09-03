@@ -264,7 +264,7 @@ h2 {
 
     stroke-dashoffset: 1000;
 
-    transition: stroke-dashoffset 5s ease;
+    transition: stroke-dashoffset 3s ease;
 }
 
 .travel-slide.active .route {
@@ -443,104 +443,17 @@ h2 {
     transform: translateY(-50%) translateX(0);
 }
 
-.destination-card-carousel {
-    position: relative;
+.destination-card-image {
     height: 190px;
+
     border-radius: 14px;
-    overflow: hidden;
-    background: #E6E3DD;
-    margin-bottom: 1.1rem;
-}
 
-.destination-card-carousel-track {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 1.15s cubic-bezier(.65, 0, .35, 1);
-    will-change: transform;
-}
+    background-color: #E6E3DD;
 
-.destination-card-carousel-slide {
-    flex: 0 0 100%;
-    width: 100%;
-    height: 100%;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-}
 
-.destination-card-carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
-    border: 1px solid rgba(255,255,255,.7);
-    border-radius: 50%;
-    background: rgba(37,37,37,.24);
-    color: #fff;
-    display: grid;
-    place-items: center;
-    font-size: .95rem;
-    line-height: 1;
-    z-index: 3;
-    cursor: pointer;
-    backdrop-filter: blur(4px);
-    transition: opacity .25s ease, background .25s ease;
-}
-
-.destination-card-carousel-button:hover {
-    background: rgba(37,37,37,.42);
-}
-
-.destination-card-carousel-button.prev {
-    left: 10px;
-}
-
-.destination-card-carousel-button.next {
-    right: 10px;
-}
-
-.destination-card-carousel-dots {
-    position: absolute;
-    left: 50%;
-    bottom: 10px;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 7px;
-    z-index: 3;
-}
-
-.destination-card-carousel-dot {
-    width: 8px;
-    height: 8px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: rgba(255,255,255,.65);
-    cursor: pointer;
-    transition: transform .25s ease, opacity .25s ease;
-}
-
-.destination-card-carousel-dot.active {
-    transform: scale(1.25);
-    opacity: 1;
-}
-
-.destination-card-title-row {
-    display: flex;
-    align-items: center;
-    gap: .55rem;
-}
-
-.destination-card-flag {
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-    font-size: 1.55rem;
-    line-height: 1;
-}
-
-.destination-card h3 {
-    margin-bottom: 0;
+    margin-bottom: 1.1rem;
 }
 
 .destination-card-content {
@@ -560,6 +473,7 @@ h2 {
 .destination-card h3 {
     font-family: "Playfair Display", serif;
     font-size: 2rem;
+    margin-bottom: .7rem;
 }
 
 .destination-card p {
@@ -1447,14 +1361,14 @@ h2 {
 
 
         <!-- =================================================
-             WORLD MAP 
+             WORLD MAP (real map, recolored to the project palette)
         ================================================== -->
 
         <div class="map-stage" id="mapStage">
 
             <img
                 class="world-map-img"
-                src="world-map.png"
+                src="images/world-map.png""
                 alt="World map"
             >
 
@@ -1801,33 +1715,9 @@ h2 {
 
 
             <div
-                id="destinationCarousel"
-                class="destination-card-carousel"
-            >
-                <div
-                    id="destinationCarouselTrack"
-                    class="destination-card-carousel-track"
-                ></div>
-
-                <button
-                    id="destinationCarouselPrev"
-                    class="destination-card-carousel-button prev"
-                    type="button"
-                    aria-label="Previous photo"
-                >←</button>
-
-                <button
-                    id="destinationCarouselNext"
-                    class="destination-card-carousel-button next"
-                    type="button"
-                    aria-label="Next photo"
-                >→</button>
-
-                <div
-                    id="destinationCarouselDots"
-                    class="destination-card-carousel-dots"
-                ></div>
-            </div>
+                id="destinationImage"
+                class="destination-card-image"
+            ></div>
 
 
             <div class="destination-card-content">
@@ -1840,17 +1730,9 @@ h2 {
                 </div>
 
 
-                <div class="destination-card-title-row">
-                    <span
-                        id="destinationFlag"
-                        class="destination-card-flag"
-                        aria-hidden="true"
-                    >🇭🇰</span>
-
-                    <h3 id="destinationTitle">
-                        Hong Kong
-                    </h3>
-                </div>
+                <h3 id="destinationTitle">
+                    Hong Kong
+                </h3>
 
 
                 <p id="destinationText">
@@ -2668,68 +2550,104 @@ document.addEventListener(
 ========================================================= */
 
 const destinations = {
+
     "macau": {
+
         title: "Macau",
+
         region: "Travel memory",
-        flag: "🇲🇴",
-        images: ["images/macau.jpg", "images/macau-2.jpg"],
+
+        image: "images/macau.jpg",
+
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
+
     },
+
 
     "hong-kong": {
+
         title: "Hong Kong",
+
         region: "Travel memory",
-        flag: "🇭🇰",
-        images: ["images/hong-kong.jpg", "images/hong-kong-2.jpg"],
+
+        image: "images/hong-kong.jpg",
+
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
+
     },
+
 
     "singapore": {
+
         title: "Singapore",
+
         region: "Travel memory",
-        flag: "🇸🇬",
-        images: ["images/singapore.jpg", "images/singapore-2.jpg"],
+
+        image: "images/singapore.jpg",
+
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
+
     },
+
 
     "australia": {
+
         title: "Australia",
+
         region: "Travel memory",
-        flag: "🇦🇺",
-        images: ["images/australia.jpg", "images/australia-2.jpg"],
+
+        image: "images/australia.jpg",
+
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
+
     },
+
 
     "dubai": {
+
         title: "Dubai",
+
         region: "Travel memory",
-        flag: "🇦🇪",
-        images: ["images/dubai.jpg", "images/dubai-2.jpg"],
+
+        image: "images/dubai.jpg",
+
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
+
     },
+
 
     "malaysia": {
+
         title: "Malaysia",
+
         region: "Travel memory",
-        flag: "🇲🇾",
-        images: ["images/malaysia.jpg", "images/malaysia-2.jpg"],
+
+        image: "images/malaysia.jpg",
+
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
+
     },
 
+
     "thailand": {
+
         title: "Thailand",
+
         region: "Travel memory",
-        flag: "🇹🇭",
-        images: ["images/thailand.jpg", "images/thailand-2.jpg"],
+
+        image: "images/thailand.jpg",
+
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
+
     }
+
 };
 
 
@@ -2741,23 +2659,8 @@ const destinationCard =
     document.getElementById("destinationCard");
 
 
-const destinationCarousel =
-    document.getElementById("destinationCarousel");
-
-const destinationCarouselTrack =
-    document.getElementById("destinationCarouselTrack");
-
-const destinationCarouselDots =
-    document.getElementById("destinationCarouselDots");
-
-const destinationCarouselPrev =
-    document.getElementById("destinationCarouselPrev");
-
-const destinationCarouselNext =
-    document.getElementById("destinationCarouselNext");
-
-const destinationFlag =
-    document.getElementById("destinationFlag");
+const destinationImage =
+    document.getElementById("destinationImage");
 
 
 const destinationTitle =
@@ -2774,167 +2677,6 @@ const destinationText =
 
 const closeCard =
     document.getElementById("closeCard");
-
-
-/* =========================================================
-   DESTINATION POPUP PHOTO CAROUSEL
-   Two photos per destination — same 5s timing and
-   smooth transition language as the existing chapter carousels.
-========================================================= */
-
-let destinationCarouselIndex = 0;
-let destinationCarouselTimer = null;
-
-function updateDestinationCarousel(index) {
-
-    if (!destinationCarouselTrack) {
-        return;
-    }
-
-    const slides =
-        destinationCarouselTrack.querySelectorAll(
-            ".destination-card-carousel-slide"
-        );
-
-    const dots =
-        destinationCarouselDots
-            ? destinationCarouselDots.querySelectorAll(
-                ".destination-card-carousel-dot"
-            )
-            : [];
-
-    if (!slides.length) {
-        return;
-    }
-
-    destinationCarouselIndex =
-        (index + slides.length) % slides.length;
-
-    destinationCarouselTrack.style.transform =
-        `translateX(-${destinationCarouselIndex * 100}%)`;
-
-    dots.forEach((dot, i) => {
-        dot.classList.toggle(
-            "active",
-            i === destinationCarouselIndex
-        );
-    });
-}
-
-function restartDestinationCarouselTimer() {
-
-    clearInterval(destinationCarouselTimer);
-
-    destinationCarouselTimer = setInterval(() => {
-        updateDestinationCarousel(
-            destinationCarouselIndex + 1
-        );
-    }, 5000);
-}
-
-function buildDestinationCarousel(images) {
-
-    if (!destinationCarouselTrack ||
-        !destinationCarouselDots) {
-        return;
-    }
-
-    clearInterval(destinationCarouselTimer);
-
-    destinationCarouselTrack.innerHTML = "";
-    destinationCarouselDots.innerHTML = "";
-
-    images.slice(0, 2).forEach((image, index) => {
-
-        const slide =
-            document.createElement("div");
-
-        slide.className =
-            "destination-card-carousel-slide";
-
-        slide.style.backgroundImage =
-            `url("${image}")`;
-
-        destinationCarouselTrack.appendChild(slide);
-
-
-        const dot =
-            document.createElement("button");
-
-        dot.type = "button";
-        dot.className =
-            "destination-card-carousel-dot";
-
-        dot.setAttribute(
-            "aria-label",
-            `Photo ${index + 1}`
-        );
-
-        dot.addEventListener("click", event => {
-
-            event.stopPropagation();
-
-            updateDestinationCarousel(index);
-            restartDestinationCarouselTimer();
-
-        });
-
-        destinationCarouselDots.appendChild(dot);
-
-    });
-
-    destinationCarouselIndex = 0;
-
-    updateDestinationCarousel(0);
-
-    restartDestinationCarouselTimer();
-}
-
-function nextDestinationPhoto() {
-
-    updateDestinationCarousel(
-        destinationCarouselIndex + 1
-    );
-
-    restartDestinationCarouselTimer();
-}
-
-function previousDestinationPhoto() {
-
-    updateDestinationCarousel(
-        destinationCarouselIndex - 1
-    );
-
-    restartDestinationCarouselTimer();
-}
-
-if (destinationCarouselNext) {
-
-    destinationCarouselNext.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-            nextDestinationPhoto();
-
-        }
-    );
-
-}
-
-if (destinationCarouselPrev) {
-
-    destinationCarouselPrev.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-            previousDestinationPhoto();
-
-        }
-    );
-
-}
 
 
 /* =========================================================
@@ -2964,12 +2706,8 @@ function openDestination(destinationName) {
         destination.text;
 
 
-    destinationFlag.textContent =
-        destination.flag;
-
-    buildDestinationCarousel(
-        destination.images
-    );
+    destinationImage.style.backgroundImage =
+        `url("${destination.image}")`;
 
 
     destinationElements.forEach(
