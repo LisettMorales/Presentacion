@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -371,10 +371,8 @@ h2 {
     pointer-events: none;
 
     opacity: 0;
-}
 
-.travel-slide.active .airplane {
-    opacity: 1;
+    transition: opacity .5s ease;
 }
 
 .airplane svg {
@@ -384,6 +382,41 @@ h2 {
 
 .airplane path {
     fill: var(--terracotta);
+}
+
+/* =========================================================
+   SHIP
+   Same map, same route — a second vehicle that repeats the
+   journey right after the plane, so the trip keeps replaying
+   while this slide is open.
+========================================================= */
+
+.ship {
+    position: absolute;
+
+    width: 36px;
+    height: 36px;
+
+    z-index: 7;
+
+    transform-origin: center;
+
+    filter: drop-shadow(0 5px 7px rgba(0,0,0,.15));
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition: opacity .5s ease;
+}
+
+.ship svg {
+    width: 100%;
+    height: 100%;
+}
+
+.ship path {
+    fill: var(--soft-blue);
 }
 
 /* =========================================================
@@ -444,16 +477,112 @@ h2 {
 }
 
 .destination-card-image {
+    position: relative;
+
     height: 190px;
 
     border-radius: 14px;
 
+    overflow: hidden;
+
     background-color: #E6E3DD;
 
+    margin-bottom: 1.1rem;
+}
+
+/* =========================================================
+   DESTINATION CARD — PHOTO CAROUSEL (2 photos)
+   Same visual language / timings as the chapter carousels.
+========================================================= */
+
+.destination-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    touch-action: pan-y;
+    cursor: grab;
+    background: #E6E3DD;
+}
+
+.destination-carousel:active {
+    cursor: grabbing;
+}
+
+.destination-carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 1.15s cubic-bezier(.65, 0, .35, 1);
+    will-change: transform;
+}
+
+.destination-carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+}
 
-    margin-bottom: 1.1rem;
+.destination-carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 50%;
+    background: rgba(37,37,37,.24);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    line-height: 1;
+    z-index: 3;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: opacity .25s ease, background .25s ease;
+}
+
+.destination-carousel-button:hover {
+    background: rgba(37,37,37,.42);
+}
+
+.destination-carousel-button.prev {
+    left: 10px;
+}
+
+.destination-carousel-button.next {
+    right: 10px;
+}
+
+.destination-carousel-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 3;
+}
+
+.destination-carousel-dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.65);
+    cursor: pointer;
+    transition: transform .25s ease, opacity .25s ease;
+}
+
+.destination-carousel-dot.active {
+    transform: scale(1.25);
+    opacity: 1;
 }
 
 .destination-card-content {
@@ -701,7 +830,7 @@ h2 {
 
     transform: scaleY(0);
     transform-origin: top;
-    transition: transform 2.4s cubic-bezier(.65, 0, .35, 1);
+    transition: transform 3.4s cubic-bezier(.65, 0, .35, 1);
 }
 
 /* The vertical line "draws itself" top to bottom,
@@ -747,10 +876,10 @@ h2 {
     transform: translateY(0);
 }
 
-.timeline.animate .timeline-item:nth-child(2) { transition-delay: .28s; }
-.timeline.animate .timeline-item:nth-child(3) { transition-delay: .62s; }
-.timeline.animate .timeline-item:nth-child(4) { transition-delay: .96s; }
-.timeline.animate .timeline-item:nth-child(5) { transition-delay: 1.30s; }
+.timeline.animate .timeline-item:nth-child(2) { transition-delay: .55s; }
+.timeline.animate .timeline-item:nth-child(3) { transition-delay: 1.25s; }
+.timeline.animate .timeline-item:nth-child(4) { transition-delay: 1.95s; }
+.timeline.animate .timeline-item:nth-child(5) { transition-delay: 2.65s; }
 
 .timeline-item::before {
     content: "";
@@ -773,10 +902,10 @@ h2 {
 
 /* Each dot "lights up" terracotta just before its
    text fades in, marking the path as it goes. */
-.timeline.animate .timeline-item:nth-child(2)::before { transition-delay: .05s; }
-.timeline.animate .timeline-item:nth-child(3)::before { transition-delay: .28s; }
-.timeline.animate .timeline-item:nth-child(4)::before { transition-delay: .51s; }
-.timeline.animate .timeline-item:nth-child(5)::before { transition-delay: .74s; }
+.timeline.animate .timeline-item:nth-child(2)::before { transition-delay: .10s; }
+.timeline.animate .timeline-item:nth-child(3)::before { transition-delay: .58s; }
+.timeline.animate .timeline-item:nth-child(4)::before { transition-delay: 1.06s; }
+.timeline.animate .timeline-item:nth-child(5)::before { transition-delay: 1.54s; }
 
 .timeline.animate .timeline-item::before {
     background: var(--terracotta);
@@ -1185,6 +1314,57 @@ h2 {
 }
 
 /* =========================================================
+   JOURNEY PLANE
+   A small plane that rides along the top progress bar,
+   from Slide 01 to the final slide. It flies to its new
+   spot every time the person changes slides — a little
+   "you are here" for the whole presentation.
+========================================================= */
+
+.journey-plane {
+    position: fixed;
+
+    top: -8px;
+    left: 0;
+
+    width: 20px;
+    height: 20px;
+
+    z-index: 201;
+
+    transform: translateX(-50%);
+
+    transition: left .9s cubic-bezier(.65, 0, .35, 1);
+
+    pointer-events: none;
+
+    filter: drop-shadow(0 2px 5px rgba(37,37,37,.3));
+}
+
+.journey-plane svg {
+    width: 100%;
+    height: 100%;
+
+    transition: transform .9s cubic-bezier(.65, 0, .35, 1);
+}
+
+.journey-plane.flying svg {
+    transform: translateY(-5px);
+}
+
+.journey-plane.facing-back svg {
+    transform: scaleX(-1);
+}
+
+.journey-plane.facing-back.flying svg {
+    transform: scaleX(-1) translateY(-5px);
+}
+
+.journey-plane path {
+    fill: var(--terracotta);
+}
+
+/* =========================================================
    FULLSCREEN BUTTON
 ========================================================= */
 
@@ -1283,6 +1463,41 @@ h2 {
 
 <div class="progress" id="progress"></div>
 
+<div class="journey-plane" id="journeyPlane" aria-hidden="true">
+
+    <svg
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+
+        <path
+            d="
+            M22,11.5
+            L20.5,10
+            L15,10
+            L10,2
+            L8,2
+            L10.5,10
+            L5,10
+            L3.5,7.5
+            L2,7.5
+            L3,11.5
+            L2,15.5
+            L3.5,15.5
+            L5,13
+            L10.5,13
+            L8,21
+            L10,21
+            L15,13
+            L20.5,13
+            Z
+            "
+        />
+
+    </svg>
+
+</div>
+
 
 <!-- =====================================================
      SLIDE 1
@@ -1368,7 +1583,7 @@ h2 {
 
             <img
                 class="world-map-img"
-                src="world-map.png"
+                src="images/world-map.png"
                 alt="World map"
             >
 
@@ -1650,25 +1865,60 @@ h2 {
             >
 
                 <svg
-                    viewBox="0 0 64 64"
+                    viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                 >
 
                     <path
                         d="
-                        M56 31
-                        L37 25
-                        L29 8
-                        L23 8
-                        L25 27
-                        L10 23
-                        L5 28
-                        L25 35
-                        L23 54
-                        L29 54
-                        L37 37
-                        L56 33
+                        M22,11.5
+                        L20.5,10
+                        L15,10
+                        L10,2
+                        L8,2
+                        L10.5,10
+                        L5,10
+                        L3.5,7.5
+                        L2,7.5
+                        L3,11.5
+                        L2,15.5
+                        L3.5,15.5
+                        L5,13
+                        L10.5,13
+                        L8,21
+                        L10,21
+                        L15,13
+                        L20.5,13
                         Z
+                        "
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <!-- =================================================
+                 SHIP — retraces the same route right after
+                 the plane, so the journey keeps repeating.
+            ================================================== -->
+
+            <div
+                id="ship"
+                class="ship"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+
+                    <path
+                        d="
+                        M2,16 L2,19 L20,19 L22,16.5 L18,16 Z
+                        M9,16 L9,13 L16,13 L16,16 Z
+                        M5,16 L5,11 L9,11 L9,16 Z
+                        M11.5,11 L11.5,7 L13.5,7 L13.5,11 Z
                         "
                     />
 
@@ -1714,10 +1964,35 @@ h2 {
             </button>
 
 
-            <div
-                id="destinationImage"
-                class="destination-card-image"
-            ></div>
+            <div class="destination-card-image">
+
+                <div class="destination-carousel" id="destinationCarousel">
+
+                    <div class="destination-carousel-track" id="destinationCarouselTrack">
+
+                        <div class="destination-carousel-slide" id="destinationSlide0"></div>
+                        <div class="destination-carousel-slide" id="destinationSlide1"></div>
+
+                    </div>
+
+                    <button class="destination-carousel-button prev"
+                            id="destinationPrev"
+                            type="button"
+                            aria-label="Previous photo">←</button>
+
+                    <button class="destination-carousel-button next"
+                            id="destinationNext"
+                            type="button"
+                            aria-label="Next photo">→</button>
+
+                    <div class="destination-carousel-dots" id="destinationCarouselDots">
+                        <button class="destination-carousel-dot active" type="button" aria-label="Photo 1"></button>
+                        <button class="destination-carousel-dot" type="button" aria-label="Photo 2"></button>
+                    </div>
+
+                </div>
+
+            </div>
 
 
             <div class="destination-card-content">
@@ -2335,8 +2610,70 @@ const nextButton = document.getElementById("nextButton");
 
 const slideCounter = document.getElementById("slideCounter");
 const progress = document.getElementById("progress");
+const journeyPlane = document.getElementById("journeyPlane");
 
 let currentSlide = 0;
+
+// Which way we're navigating (1 = forward/next, -1 = back/
+// previous), so the journey plane can face the right way.
+let navDirection = 1;
+let journeyInitialized = false;
+
+
+/*
+   Moves the small plane riding the top progress bar to match
+   the current slide — 0% at Slide 01, 100% at the final
+   slide — flying to its new spot every time the person
+   changes slides.
+*/
+
+function updateJourneyPlane() {
+
+    if (!journeyPlane) {
+        return;
+    }
+
+    const travelPercentage =
+        slides.length > 1
+            ? (currentSlide / (slides.length - 1)) * 100
+            : 0;
+
+    journeyPlane.classList.toggle(
+        "facing-back",
+        navDirection < 0
+    );
+
+    if (!journeyInitialized) {
+
+        // Place it instantly on first paint — no flight
+        // animation before the person has navigated at all.
+        journeyPlane.style.transition = "none";
+        journeyPlane.style.left = `${travelPercentage}%`;
+
+        void journeyPlane.offsetWidth;
+
+        journeyPlane.style.transition = "";
+
+        journeyInitialized = true;
+
+        return;
+
+    }
+
+    journeyPlane.style.left =
+        `${travelPercentage}%`;
+
+    journeyPlane.classList.add("flying");
+
+    clearTimeout(journeyPlane._flyTimeout);
+
+    journeyPlane._flyTimeout = setTimeout(() => {
+
+        journeyPlane.classList.remove("flying");
+
+    }, 900);
+
+}
 
 
 function showSlide(index) {
@@ -2376,9 +2713,16 @@ function showSlide(index) {
         `${percentage}%`;
 
 
+    updateJourneyPlane();
+
+
     if (currentSlide === 1) {
 
         startTravelAnimation();
+
+    } else {
+
+        stopTravelAnimation();
 
     }
 
@@ -2397,12 +2741,16 @@ function showSlide(index) {
 
 function nextSlide() {
 
+    navDirection = 1;
+
     showSlide(currentSlide + 1);
 
 }
 
 
 function previousSlide() {
+
+    navDirection = -1;
 
     showSlide(currentSlide - 1);
 
@@ -2553,11 +2901,16 @@ const destinations = {
 
     "macau": {
 
+        flag: "🇲🇴",
+
         title: "Macau",
 
         region: "Travel memory",
 
-        image: "images/macau.jpg",
+        images: [
+            "images/macau-1.jpg",
+            "images/macau-2.jpg"
+        ],
 
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
@@ -2567,11 +2920,16 @@ const destinations = {
 
     "hong-kong": {
 
+        flag: "🇭🇰",
+
         title: "Hong Kong",
 
         region: "Travel memory",
 
-        image: "images/hong-kong.jpg",
+        images: [
+            "images/hong-kong-1.jpg",
+            "images/hong-kong-2.jpg"
+        ],
 
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
@@ -2581,11 +2939,16 @@ const destinations = {
 
     "singapore": {
 
+        flag: "🇸🇬",
+
         title: "Singapore",
 
         region: "Travel memory",
 
-        image: "images/singapore.jpg",
+        images: [
+            "images/singapore-1.jpg",
+            "images/singapore-2.jpg"
+        ],
 
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
@@ -2595,11 +2958,16 @@ const destinations = {
 
     "australia": {
 
+        flag: "🇦🇺",
+
         title: "Australia",
 
         region: "Travel memory",
 
-        image: "images/australia.jpg",
+        images: [
+            "images/australia-1.jpg",
+            "images/australia-2.jpg"
+        ],
 
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
@@ -2609,11 +2977,16 @@ const destinations = {
 
     "dubai": {
 
+        flag: "🇦🇪",
+
         title: "Dubai",
 
         region: "Travel memory",
 
-        image: "images/dubai.jpg",
+        images: [
+            "images/dubai-1.jpg",
+            "images/dubai-2.jpg"
+        ],
 
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
@@ -2623,11 +2996,16 @@ const destinations = {
 
     "malaysia": {
 
+        flag: "🇲🇾",
+
         title: "Malaysia",
 
         region: "Travel memory",
 
-        image: "images/malaysia.jpg",
+        images: [
+            "images/malaysia-1.jpg",
+            "images/malaysia-2.jpg"
+        ],
 
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
@@ -2637,11 +3015,16 @@ const destinations = {
 
     "thailand": {
 
+        flag: "🇹🇭",
+
         title: "Thailand",
 
         region: "Travel memory",
 
-        image: "images/thailand.jpg",
+        images: [
+            "images/thailand-1.jpg",
+            "images/thailand-2.jpg"
+        ],
 
         text:
             "One of the destinations I've explored while discovering new places, cultures and experiences."
@@ -2657,10 +3040,6 @@ const destinationElements =
 
 const destinationCard =
     document.getElementById("destinationCard");
-
-
-const destinationImage =
-    document.getElementById("destinationImage");
 
 
 const destinationTitle =
@@ -2680,6 +3059,138 @@ const closeCard =
 
 
 /* =========================================================
+   DESTINATION CARD — PHOTO CAROUSEL (2 photos)
+   Same behaviour/timings as the chapter carousels:
+   auto-advance every 5s, arrows, dots, smooth transition.
+========================================================= */
+
+const destinationCarousel =
+    document.getElementById("destinationCarousel");
+
+const destinationCarouselTrack =
+    document.getElementById("destinationCarouselTrack");
+
+const destinationSlideEls = [
+    document.getElementById("destinationSlide0"),
+    document.getElementById("destinationSlide1")
+];
+
+const destinationCarouselDots =
+    document.querySelectorAll(
+        "#destinationCarouselDots .destination-carousel-dot"
+    );
+
+const destinationPrev =
+    document.getElementById("destinationPrev");
+
+const destinationNext =
+    document.getElementById("destinationNext");
+
+let destinationCarouselIndex = 0;
+let destinationCarouselTimer = null;
+let destinationTouchStartX = 0;
+
+
+function updateDestinationCarousel(index) {
+
+    if (!destinationCarouselTrack || !destinationSlideEls.length) {
+        return;
+    }
+
+    destinationCarouselIndex =
+        (index + destinationSlideEls.length) %
+        destinationSlideEls.length;
+
+    destinationCarouselTrack.style.transform =
+        `translateX(-${destinationCarouselIndex * 100}%)`;
+
+    destinationCarouselDots.forEach((dot, i) => {
+        dot.classList.toggle(
+            "active",
+            i === destinationCarouselIndex
+        );
+    });
+
+}
+
+
+function restartDestinationCarouselTimer() {
+
+    clearInterval(destinationCarouselTimer);
+
+    destinationCarouselTimer = setInterval(() => {
+        updateDestinationCarousel(destinationCarouselIndex + 1);
+    }, 5000);
+
+}
+
+
+function nextDestinationPhoto() {
+    updateDestinationCarousel(destinationCarouselIndex + 1);
+    restartDestinationCarouselTimer();
+}
+
+
+function previousDestinationPhoto() {
+    updateDestinationCarousel(destinationCarouselIndex - 1);
+    restartDestinationCarouselTimer();
+}
+
+
+if (destinationNext) {
+    destinationNext.addEventListener("click", nextDestinationPhoto);
+}
+
+if (destinationPrev) {
+    destinationPrev.addEventListener("click", previousDestinationPhoto);
+}
+
+destinationCarouselDots.forEach((dot, dotIndex) => {
+
+    dot.addEventListener("click", () => {
+        updateDestinationCarousel(dotIndex);
+        restartDestinationCarouselTimer();
+    });
+
+});
+
+if (destinationCarousel) {
+
+    destinationCarousel.addEventListener(
+        "touchstart",
+        event => {
+            destinationTouchStartX =
+                event.changedTouches[0].screenX;
+        },
+        { passive: true }
+    );
+
+    destinationCarousel.addEventListener(
+        "touchend",
+        event => {
+
+            const difference =
+                event.changedTouches[0].screenX -
+                destinationTouchStartX;
+
+            if (Math.abs(difference) < 45) {
+                return;
+            }
+
+            if (difference < 0) {
+                nextDestinationPhoto();
+            } else {
+                previousDestinationPhoto();
+            }
+
+        },
+        { passive: true }
+    );
+
+}
+
+
+/* =========================================================
    OPEN DESTINATION
 ========================================================= */
 
@@ -2695,7 +3206,7 @@ function openDestination(destinationName) {
 
 
     destinationTitle.textContent =
-        destination.title;
+        `${destination.flag} ${destination.title}`;
 
 
     destinationRegion.textContent =
@@ -2706,8 +3217,21 @@ function openDestination(destinationName) {
         destination.text;
 
 
-    destinationImage.style.backgroundImage =
-        `url("${destination.image}")`;
+    // Load the 2 photos into the carousel and reset it
+    // to the first slide every time a destination opens.
+    destinationSlideEls.forEach((slide, i) => {
+
+        if (!slide) {
+            return;
+        }
+
+        slide.style.backgroundImage =
+            `url("${destination.images[i]}")`;
+
+    });
+
+    updateDestinationCarousel(0);
+    restartDestinationCarouselTimer();
 
 
     destinationElements.forEach(
@@ -2776,6 +3300,8 @@ closeCard.addEventListener(
             "open"
         );
 
+        clearInterval(destinationCarouselTimer);
+
 
         destinationElements.forEach(
             element => {
@@ -2827,6 +3353,10 @@ const airplane =
     document.getElementById("airplane");
 
 
+const ship =
+    document.getElementById("ship");
+
+
 const mapStage =
     document.getElementById("mapStage");
 
@@ -2834,6 +3364,11 @@ const mapStage =
 const travelRoutePath =
     document.getElementById("travelRoute");
 
+
+// Bumped every time we leave/re-enter the map slide, so any
+// in-flight loop iteration can tell it's stale and stop
+// instead of continuing to animate off-screen.
+let travelLoopToken = 0;
 
 let travelAnimationRunning =
     false;
@@ -2892,15 +3427,20 @@ travelRoutePath.setAttribute(
 
 
 /*
-   Position the airplane (an absolutely positioned div)
-   relative to the map-stage element, using the current
-   rendered size of the stage vs. the SVG's 1260x750
-   coordinate space. Because the image, the SVG overlay
-   and the airplane all share the exact same box
+   Position a vehicle (an absolutely positioned div — the
+   plane or the ship) relative to the map-stage element,
+   using the current rendered size of the stage vs. the
+   SVG's 1260x750 coordinate space. Because the image, the
+   SVG overlay and the vehicles all share the exact same box
    (map-stage), no extra offset math is needed.
+
+   The plane banks fully into the curve (rotate). The ship
+   stays level on the water and just faces the direction
+   it's heading (a horizontal flip), which reads more
+   naturally for a boat than a full rotation would.
 */
 
-function placeAirplane(x, y, angleDeg) {
+function placeVehicle(vehicleEl, x, y, angleDeg, kind) {
 
     const stageRect =
         mapStage.getBoundingClientRect();
@@ -2908,16 +3448,281 @@ function placeAirplane(x, y, angleDeg) {
     const scaleX = stageRect.width / 1260;
     const scaleY = stageRect.height / 750;
 
-    airplane.style.left =
-        `${x * scaleX - 17}px`;
+    vehicleEl.style.left =
+        `${x * scaleX - 18}px`;
 
-    airplane.style.top =
-        `${y * scaleY - 17}px`;
+    vehicleEl.style.top =
+        `${y * scaleY - 18}px`;
 
-    if (angleDeg !== null) {
+    if (angleDeg === null) {
+        return;
+    }
 
-        airplane.style.transform =
+    if (kind === "ship") {
+
+        const headingLeft =
+            Math.cos(angleDeg * Math.PI / 180) < 0;
+
+        vehicleEl.style.transform =
+            headingLeft ? "scaleX(-1)" : "scaleX(1)";
+
+    } else {
+
+        vehicleEl.style.transform =
             `rotate(${angleDeg}deg)`;
+
+    }
+
+}
+
+
+function placeAirplane(x, y, angleDeg) {
+    placeVehicle(airplane, x, y, angleDeg, "plane");
+}
+
+
+function placeShip(x, y, angleDeg) {
+    placeVehicle(ship, x, y, angleDeg, "ship");
+}
+
+
+const totalRouteLength =
+    travelRoutePath.getTotalLength();
+
+const routeStopCount =
+    travelStops.length;
+
+// Each destination sits at an even fraction along the curve
+const routeStopLengths =
+    travelStops.map(
+        (_, i) => (i / (routeStopCount - 1)) * totalRouteLength
+    );
+
+
+function pointOnRouteAt(length) {
+
+    const clamped =
+        Math.max(0, Math.min(totalRouteLength, length));
+
+    return travelRoutePath.getPointAtLength(clamped);
+
+}
+
+
+function angleOnRouteAt(length) {
+
+    const a = pointOnRouteAt(length - 1);
+    const b = pointOnRouteAt(length + 1);
+
+    return Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+
+}
+
+
+/*
+   Flies one vehicle (plane or ship) along the full route,
+   stop by stop, exactly like the original single-plane
+   animation did. Returns a Promise that resolves once the
+   vehicle has reached the final destination, so callers can
+   chain the next vehicle after it — that's what lets the
+   trip repeat with the plane, then the ship, on a loop.
+
+   `token` is the loop generation this run belongs to; if the
+   person navigates away from the slide, travelLoopToken is
+   bumped and any animation frame still in flight quietly
+   stops instead of continuing off-screen.
+*/
+
+function flyVehicleAlongRoute(placeFn, kind, token) {
+
+    return new Promise(resolve => {
+
+        let stopIndex = 0;
+
+
+        function travelToNextStop() {
+
+            if (token !== travelLoopToken) {
+                resolve();
+                return;
+            }
+
+            if (stopIndex >= routeStopCount) {
+                resolve();
+                return;
+            }
+
+            const startLength =
+                stopIndex === 0
+                    ? routeStopLengths[0]
+                    : routeStopLengths[stopIndex - 1];
+
+            const endLength =
+                routeStopLengths[stopIndex];
+
+            let startTime = null;
+
+            const duration = 1000;
+
+
+            function animate(timestamp) {
+
+                if (token !== travelLoopToken) {
+                    resolve();
+                    return;
+                }
+
+                if (!startTime) {
+                    startTime = timestamp;
+                }
+
+                const elapsed =
+                    timestamp - startTime;
+
+                const amount =
+                    Math.min(elapsed / duration, 1);
+
+                /*
+                   Smooth ease-in-out
+                */
+
+                const eased =
+                    amount < .5
+                        ? 2 * amount * amount
+                        : 1 - Math.pow(-2 * amount + 2, 2) / 2;
+
+                const currentLength =
+                    startLength + (endLength - startLength) * eased;
+
+                const position =
+                    pointOnRouteAt(currentLength);
+
+                const angle =
+                    startLength === endLength
+                        ? angleOnRouteAt(currentLength + 1)
+                        : angleOnRouteAt(currentLength);
+
+                placeFn(
+                    position.x,
+                    position.y,
+                    angle
+                );
+
+                if (amount < 1) {
+
+                    requestAnimationFrame(animate);
+
+                } else {
+
+                    highlightStop(stopIndex, kind);
+
+                    stopIndex++;
+
+                    setTimeout(travelToNextStop, 350);
+
+                }
+
+            }
+
+            requestAnimationFrame(animate);
+
+        }
+
+        travelToNextStop();
+
+    });
+
+}
+
+
+function wait(ms) {
+
+    return new Promise(resolve => {
+
+        setTimeout(resolve, ms);
+
+    });
+
+}
+
+
+/*
+   Runs the plane across the route, pauses, then sends the
+   ship across the exact same route, pauses, and loops back
+   to the plane again — for as long as the traveller stays on
+   this slide. Each leg keeps the plane's original 1s-per-leg
+   pacing; only the hand-off between vehicles is new.
+*/
+
+async function runTravelLoop(token) {
+
+    while (token === travelLoopToken) {
+
+        destinationElements.forEach(
+            element => {
+                element.classList.remove("active-pulse");
+            }
+        );
+
+        // --- Plane leg ---
+        placeAirplane(
+            travelStops[0].x,
+            travelStops[0].y,
+            null
+        );
+
+        airplane.style.opacity = 1;
+
+        await flyVehicleAlongRoute(placeAirplane, "plane", token);
+
+        if (token !== travelLoopToken) {
+            return;
+        }
+
+        await wait(1000);
+
+        if (token !== travelLoopToken) {
+            return;
+        }
+
+        airplane.style.opacity = 0;
+
+        await wait(500);
+
+        if (token !== travelLoopToken) {
+            return;
+        }
+
+        destinationElements.forEach(
+            element => {
+                element.classList.remove("active-pulse");
+            }
+        );
+
+        // --- Ship leg — retraces the same route ---
+        placeShip(
+            travelStops[0].x,
+            travelStops[0].y,
+            null
+        );
+
+        ship.style.opacity = 1;
+
+        await flyVehicleAlongRoute(placeShip, "ship", token);
+
+        if (token !== travelLoopToken) {
+            return;
+        }
+
+        await wait(1000);
+
+        if (token !== travelLoopToken) {
+            return;
+        }
+
+        ship.style.opacity = 0;
+
+        await wait(500);
 
     }
 
@@ -2932,133 +3737,42 @@ function startTravelAnimation() {
 
     travelAnimationRunning = true;
 
+    const token =
+        ++travelLoopToken;
+
+    runTravelLoop(token);
+
+}
+
+
+/*
+   Called when leaving the map slide: stops the loop, hides
+   both vehicles and clears any highlighted destination, so
+   the trip starts fresh — plane first — next time the slide
+   is opened.
+*/
+
+function stopTravelAnimation() {
+
+    travelAnimationRunning = false;
+
+    // Any animation frame or timeout still in flight will see
+    // this new token and resolve itself instead of continuing.
+    travelLoopToken++;
+
+    if (airplane) {
+        airplane.style.opacity = 0;
+    }
+
+    if (ship) {
+        ship.style.opacity = 0;
+    }
+
     destinationElements.forEach(
         element => {
-
-            element.classList.remove(
-                "active-pulse"
-            );
-
+            element.classList.remove("active-pulse");
         }
     );
-
-    const totalLength =
-        travelRoutePath.getTotalLength();
-
-    const stopCount =
-        travelStops.length;
-
-    // Each destination sits at an even fraction along the curve
-    const stopLengths =
-        travelStops.map(
-            (_, i) => (i / (stopCount - 1)) * totalLength
-        );
-
-    let stopIndex = 0;
-
-
-    function pointAt(length) {
-
-        const clamped =
-            Math.max(0, Math.min(totalLength, length));
-
-        return travelRoutePath.getPointAtLength(clamped);
-
-    }
-
-
-    function angleAt(length) {
-
-        const a = pointAt(length - 1);
-        const b = pointAt(length + 1);
-
-        return Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
-
-    }
-
-
-    function travelToNextStop() {
-
-        if (stopIndex >= stopCount) {
-
-            travelAnimationRunning = false;
-
-            return;
-
-        }
-
-        const startLength =
-            stopIndex === 0
-                ? stopLengths[0]
-                : stopLengths[stopIndex - 1];
-
-        const endLength =
-            stopLengths[stopIndex];
-
-        let startTime = null;
-
-        const duration = 1000;
-
-
-        function animate(timestamp) {
-
-            if (!startTime) {
-                startTime = timestamp;
-            }
-
-            const elapsed =
-                timestamp - startTime;
-
-            const amount =
-                Math.min(elapsed / duration, 1);
-
-            /*
-               Smooth ease-in-out
-            */
-
-            const eased =
-                amount < .5
-                    ? 2 * amount * amount
-                    : 1 - Math.pow(-2 * amount + 2, 2) / 2;
-
-            const currentLength =
-                startLength + (endLength - startLength) * eased;
-
-            const position =
-                pointAt(currentLength);
-
-            const angle =
-                startLength === endLength
-                    ? angleAt(currentLength + 1)
-                    : angleAt(currentLength);
-
-            placeAirplane(
-                position.x,
-                position.y,
-                angle
-            );
-
-            if (amount < 1) {
-
-                requestAnimationFrame(animate);
-
-            } else {
-
-                highlightStop(stopIndex);
-
-                stopIndex++;
-
-                setTimeout(travelToNextStop, 350);
-
-            }
-
-        }
-
-        requestAnimationFrame(animate);
-
-    }
-
-    travelToNextStop();
 
 }
 
@@ -3067,7 +3781,7 @@ function startTravelAnimation() {
    HIGHLIGHT DESTINATION
 ========================================================= */
 
-function highlightStop(index) {
+function highlightStop(index, kind) {
 
     const order = [
 
@@ -3376,7 +4090,9 @@ const chapterItems =
 // Mirrors the transition-delay values set in CSS for
 // .timeline-item:nth-child(2..5), so the terracotta
 // runner can pause at each dot roughly as it lights up.
-const chapterDotDelays = [120, 500, 880, 1260];
+// (Slowed down so the descent reads clearly instead of
+// rushing down the line.)
+const chapterDotDelays = [240, 1000, 1760, 2520];
 
 let chapterAnimationRunning = false;
 let chapterRunnerTimeouts = [];
@@ -3419,7 +4135,7 @@ function startChapterAnimation() {
         chapterTimeline.classList.add("animate");
 
         timelineRunner.style.transition =
-            "opacity .45s ease, top .8s cubic-bezier(.65,0,.35,1)";
+            "opacity .45s ease, top 1.05s cubic-bezier(.65,0,.35,1)";
 
         runTimelineRunner();
 
@@ -3466,7 +4182,7 @@ function runTimelineRunner() {
             timelineRunner.style.opacity = 0;
             chapterAnimationRunning = false;
 
-        }, chapterDotDelays[chapterDotDelays.length - 1] + 1200)
+        }, chapterDotDelays[chapterDotDelays.length - 1] + 1600)
     );
 
 }
