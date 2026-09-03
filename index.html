@@ -1,0 +1,3779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mikaella — Personal Introduction</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+:root {
+    --ivory: #F6F1E8;
+    --charcoal: #252525;
+    --terracotta: #C96F52;
+    --soft-blue: #72AFCF;
+    --soft-yellow: #E8B84A;
+    --soft-purple: #8175C8;
+    --soft-gray: #DAD8D2;
+    --white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: var(--ivory);
+    color: var(--charcoal);
+    font-family: "Montserrat", sans-serif;
+}
+
+button {
+    font-family: inherit;
+}
+
+/* =========================================================
+   PRESENTATION
+========================================================= */
+
+.presentation {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 5vh 6vw;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(40px);
+
+    transition:
+        opacity .65s ease,
+        transform .65s ease,
+        visibility .65s ease;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+.eyebrow {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(3rem, 6vw, 6.5rem);
+    line-height: .95;
+    font-weight: 600;
+}
+
+h2 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.5rem, 5vw, 5.5rem);
+    line-height: .95;
+    font-weight: 600;
+}
+
+.subtitle {
+    font-size: clamp(.9rem, 1.2vw, 1.15rem);
+    line-height: 1.7;
+    max-width: 650px;
+    color: #555;
+}
+
+.small {
+    font-size: .72rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* =========================================================
+   SLIDE 1
+========================================================= */
+
+.slide-intro {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 5vw;
+    align-items: center;
+}
+
+.intro-copy {
+    max-width: 720px;
+}
+
+.intro-copy h1 {
+    margin-bottom: 1.5rem;
+}
+
+.intro-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .7rem;
+    margin-top: 2rem;
+}
+
+.tag {
+    border: 1px solid rgba(37,37,37,.18);
+    padding: .65rem 1rem;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.photo-frame {
+    width: 100%;
+    height: 65vh;
+    border-radius: 22px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 25px 70px rgba(37,37,37,.13);
+}
+
+.photo-portrait {
+    background-image: url("images/portrait.jpg");
+}
+
+/* =========================================================
+   SLIDE 2 — TRAVEL
+========================================================= */
+
+.travel-slide {
+    padding: 3.5vh 4vw 3vh;
+}
+
+.travel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    position: relative;
+    z-index: 10;
+}
+
+.travel-header h2 {
+    font-size: clamp(2.4rem, 4vw, 4.5rem);
+}
+
+.travel-intro {
+    width: 320px;
+    font-size: .8rem;
+    line-height: 1.6;
+    color: #666;
+    padding-bottom: .4rem;
+}
+
+/* Map area */
+
+.travel-map-container {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+
+    margin-top: 1vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.map-stage {
+    position: relative;
+    width: min(90vw, 1250px);
+    aspect-ratio: 1260 / 750;
+}
+
+.world-map-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+}
+
+.map-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* =========================================================
+   TRAVEL ROUTE
+========================================================= */
+
+.route {
+    fill: none;
+    stroke: var(--terracotta);
+    stroke-width: 2.5;
+    stroke-dasharray: 7 8;
+    stroke-linecap: round;
+    opacity: .7;
+
+    stroke-dashoffset: 1000;
+
+    transition: stroke-dashoffset 3s ease;
+}
+
+.travel-slide.active .route {
+    stroke-dashoffset: 0;
+}
+
+/* =========================================================
+   DESTINATION POINTS
+========================================================= */
+
+.destination {
+    cursor: pointer;
+}
+
+.destination .outer-ring {
+    fill: rgba(201,111,82,.12);
+    stroke: var(--terracotta);
+    stroke-width: 2;
+}
+
+.destination .point {
+    fill: var(--terracotta);
+    transition: transform .25s ease, fill .25s ease;
+    transform-origin: center;
+}
+
+.destination:hover .point {
+    fill: var(--charcoal);
+}
+
+.destination:hover .outer-ring {
+    stroke: var(--charcoal);
+}
+
+.destination.selected .point {
+    fill: var(--charcoal);
+}
+
+.destination.selected .outer-ring {
+    fill: rgba(37,37,37,.12);
+    stroke: var(--charcoal);
+}
+
+/* Pulsing destination */
+
+/* Points stay perfectly still — only the airplane moves.
+   (highlightStop() still toggles this class as the plane
+   passes each destination, but it no longer animates.) */
+
+.destination.active-pulse .outer-ring {
+    animation: none;
+}
+
+@keyframes pulsePoint {
+
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: .35;
+        transform: scale(1.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+/* =========================================================
+   DESTINATION LABELS
+========================================================= */
+
+.destination-label {
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+
+    fill: var(--charcoal);
+
+    pointer-events: none;
+}
+
+/* =========================================================
+   AIRPLANE
+========================================================= */
+
+.airplane {
+    position: absolute;
+
+    width: 34px;
+    height: 34px;
+
+    z-index: 8;
+
+    transform-origin: center;
+
+    filter: drop-shadow(0 5px 7px rgba(0,0,0,.15));
+
+    pointer-events: none;
+
+    opacity: 0;
+}
+
+.travel-slide.active .airplane {
+    opacity: 1;
+}
+
+.airplane svg {
+    width: 100%;
+    height: 100%;
+}
+
+.airplane path {
+    fill: var(--terracotta);
+}
+
+/* =========================================================
+   TRAVEL COUNTER
+========================================================= */
+
+.travel-counter {
+    position: absolute;
+    bottom: 1.2rem;
+    left: 2rem;
+
+    font-family: "Playfair Display", serif;
+    font-size: 1.25rem;
+}
+
+.travel-counter strong {
+    font-size: 2.1rem;
+}
+
+/* =========================================================
+   DESTINATION POPUP
+========================================================= */
+
+.destination-card {
+    position: absolute;
+
+    width: min(390px, 90vw);
+
+    right: 4vw;
+    top: 50%;
+    transform: translateY(-50%) translateX(30px);
+
+    background: rgba(255,255,255,.97);
+
+    border-radius: 20px;
+
+    padding: 1rem;
+
+    box-shadow:
+        0 30px 80px rgba(37,37,37,.2);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease,
+        visibility .35s ease;
+
+    z-index: 30;
+}
+
+.destination-card.open {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(-50%) translateX(0);
+}
+
+.destination-card-carousel {
+    position: relative;
+    height: 190px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #E6E3DD;
+    margin-bottom: 1.1rem;
+}
+
+.destination-card-carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 1.15s cubic-bezier(.65, 0, .35, 1);
+    will-change: transform;
+}
+
+.destination-card-carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.destination-card-carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 50%;
+    background: rgba(37,37,37,.24);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: .95rem;
+    line-height: 1;
+    z-index: 3;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: opacity .25s ease, background .25s ease;
+}
+
+.destination-card-carousel-button:hover {
+    background: rgba(37,37,37,.42);
+}
+
+.destination-card-carousel-button.prev {
+    left: 10px;
+}
+
+.destination-card-carousel-button.next {
+    right: 10px;
+}
+
+.destination-card-carousel-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 7px;
+    z-index: 3;
+}
+
+.destination-card-carousel-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.65);
+    cursor: pointer;
+    transition: transform .25s ease, opacity .25s ease;
+}
+
+.destination-card-carousel-dot.active {
+    transform: scale(1.25);
+    opacity: 1;
+}
+
+.destination-card-title-row {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.destination-card-flag {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+    font-size: 1.55rem;
+    line-height: 1;
+}
+
+.destination-card h3 {
+    margin-bottom: 0;
+}
+
+.destination-card-content {
+    padding: 0 .6rem .5rem;
+}
+
+.destination-card-region {
+    font-size: .65rem;
+    letter-spacing: .16em;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--terracotta);
+
+    margin-bottom: .5rem;
+}
+
+.destination-card h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+}
+
+.destination-card p {
+    color: #666;
+    font-size: .8rem;
+    line-height: 1.65;
+}
+
+.destination-interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+
+    margin-top: 1rem;
+}
+
+.destination-interests span {
+    padding: .45rem .65rem;
+
+    border-radius: 999px;
+
+    background: var(--ivory);
+
+    font-size: .62rem;
+    font-weight: 600;
+}
+
+.close-card {
+    position: absolute;
+
+    top: 1rem;
+    right: 1rem;
+
+    width: 32px;
+    height: 32px;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.9);
+
+    cursor: pointer;
+
+    font-size: 1rem;
+
+    z-index: 3;
+}
+
+/* =========================================================
+   TRAVEL INSTRUCTION
+========================================================= */
+
+.travel-hint {
+    position: absolute;
+
+    bottom: 1.2rem;
+    right: 2rem;
+
+    font-size: .65rem;
+    letter-spacing: .1em;
+
+    text-transform: uppercase;
+
+    color: #888;
+}
+
+.travel-hint::before {
+    content: "✦";
+    color: var(--terracotta);
+    margin-right: .5rem;
+}
+
+/* =========================================================
+   SLIDE 3 — CHAPTERS
+========================================================= */
+
+.chapters-slide {
+    justify-content: center;
+}
+
+.chapter-layout {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 5vw;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+.chapter-image {
+    height: 57vh;
+    border-radius: 22px;
+
+    background-image: url("images/family.jpg");
+    background-size: 112%;
+    background-position: center;
+
+    animation: chapterKenBurns 16s ease-in-out infinite alternate;
+}
+
+/* Very slow, subtle zoom/pan so the photo never feels
+   static while the timeline animates beside it. */
+@keyframes chapterKenBurns {
+
+    from {
+        background-size: 112%;
+        background-position: center;
+    }
+
+    to {
+        background-size: 124%;
+        background-position: center 38%;
+    }
+
+}
+
+/* =========================================================
+   CHAPTER 02 + CHAPTER 04 — PHOTO CAROUSELS
+   Same visual language as Chapter 03.
+========================================================= */
+
+.chapter-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    touch-action: pan-y;
+    cursor: grab;
+    background: #E9E5DD;
+}
+
+.chapter-carousel:active {
+    cursor: grabbing;
+}
+
+.chapter-carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 1.15s cubic-bezier(.65, 0, .35, 1);
+    will-change: transform;
+}
+
+.chapter-carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.chapter-carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 50%;
+    background: rgba(37,37,37,.24);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 1.15rem;
+    line-height: 1;
+    z-index: 3;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: opacity .25s ease, background .25s ease;
+}
+
+.chapter-carousel-button:hover {
+    background: rgba(37,37,37,.42);
+}
+
+.chapter-carousel-button.prev {
+    left: 14px;
+}
+
+.chapter-carousel-button.next {
+    right: 14px;
+}
+
+.chapter-carousel-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 3;
+}
+
+.chapter-carousel-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.65);
+    cursor: pointer;
+    transition: transform .25s ease, opacity .25s ease;
+}
+
+.chapter-carousel-dot.active {
+    transform: scale(1.25);
+    opacity: 1;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #C8C4BC;
+
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 2.4s cubic-bezier(.65, 0, .35, 1);
+}
+
+/* The vertical line "draws itself" top to bottom,
+   the same dashoffset-style reveal used for the
+   flight route on the map slide. */
+.timeline.animate::before {
+    transform: scaleY(1);
+}
+
+.timeline-runner {
+    position: absolute;
+    left: -2rem;
+    top: .25rem;
+
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+
+    background: var(--terracotta);
+    box-shadow: 0 0 0 4px rgba(201, 111, 82, .18);
+
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+
+    transition: opacity .3s ease, top .55s cubic-bezier(.65, 0, .35, 1);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Staggered entrance, one chapter after another —
+   the vertical counterpart to the airplane sequence
+   on the travel-map slide. */
+.timeline.animate .timeline-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline.animate .timeline-item:nth-child(2) { transition-delay: .28s; }
+.timeline.animate .timeline-item:nth-child(3) { transition-delay: .62s; }
+.timeline.animate .timeline-item:nth-child(4) { transition-delay: .96s; }
+.timeline.animate .timeline-item:nth-child(5) { transition-delay: 1.30s; }
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+
+    left: -2rem;
+    top: .25rem;
+
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    background: var(--ivory);
+    border: 1.5px solid #C8C4BC;
+    box-shadow: none;
+
+    transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+
+/* Each dot "lights up" terracotta just before its
+   text fades in, marking the path as it goes. */
+.timeline.animate .timeline-item:nth-child(2)::before { transition-delay: .05s; }
+.timeline.animate .timeline-item:nth-child(3)::before { transition-delay: .28s; }
+.timeline.animate .timeline-item:nth-child(4)::before { transition-delay: .51s; }
+.timeline.animate .timeline-item:nth-child(5)::before { transition-delay: .74s; }
+
+.timeline.animate .timeline-item::before {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    box-shadow: 0 0 0 3px rgba(201, 111, 82, .15);
+}
+
+.timeline-year {
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    letter-spacing: .15em;
+    margin-bottom: .35rem;
+}
+
+.timeline-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.6rem;
+    margin-bottom: .3rem;
+}
+
+.timeline-text {
+    color: #666;
+    font-size: .75rem;
+    line-height: 1.5;
+    max-width: 550px;
+}
+
+/* =========================================================
+   SLIDE 4 — KOREA
+========================================================= */
+
+.korea-slide {
+    justify-content: center;
+}
+
+.korea-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5vw;
+    align-items: center;
+}
+
+.korea-image {
+    height: 65vh;
+    border-radius: 22px;
+    position: relative;
+    overflow: hidden;
+    background: #E9E5DD;
+}
+
+.korea-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    touch-action: pan-y;
+    cursor: grab;
+}
+
+.korea-carousel:active {
+    cursor: grabbing;
+}
+
+.korea-carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 1.15s cubic-bezier(.65, 0, .35, 1);
+    will-change: transform;
+}
+
+.korea-carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.korea-carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 50%;
+    background: rgba(37,37,37,.24);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 1.15rem;
+    line-height: 1;
+    z-index: 3;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: opacity .25s ease, background .25s ease;
+}
+
+.korea-carousel-button:hover {
+    background: rgba(37,37,37,.42);
+}
+
+.korea-carousel-button.prev {
+    left: 14px;
+}
+
+.korea-carousel-button.next {
+    right: 14px;
+}
+
+.korea-carousel-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 3;
+}
+
+.korea-carousel-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.65);
+    cursor: pointer;
+    transition: transform .25s ease, opacity .25s ease;
+}
+
+.korea-carousel-dot.active {
+    transform: scale(1.25);
+    opacity: 1;
+}
+
+.korea-copy h2 {
+    margin-bottom: 1.5rem;
+}
+
+.korea-arrow {
+    margin: 2rem 0;
+
+    font-size: 2.4rem;
+
+    font-family: "Playfair Display", serif;
+}
+
+.korea-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.stat strong {
+    display: block;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 2.5rem;
+}
+
+.stat span {
+    display: block;
+
+    margin-top: .3rem;
+
+    color: #777;
+
+    font-size: .65rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: .1em;
+}
+
+/* =========================================================
+   SLIDE 5 — GLOBAL
+========================================================= */
+
+.global-slide {
+    justify-content: center;
+}
+
+.global-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5vw;
+    align-items: center;
+}
+
+.global-image {
+    height: 62vh;
+
+    border-radius: 22px;
+
+    background-image: url("images/global.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+.global-connections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    margin-top: 2rem;
+}
+
+.connection {
+    padding: 1.5rem;
+
+    border: 1px solid rgba(37,37,37,.13);
+
+    border-radius: 16px;
+
+    background: rgba(255,255,255,.3);
+}
+
+.connection strong {
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
+}
+
+.connection span {
+    display: block;
+
+    margin-top: .5rem;
+
+    color: #777;
+
+    font-size: .7rem;
+
+    line-height: 1.5;
+}
+
+/* =========================================================
+   SLIDE 6 — WHAT I BRING
+========================================================= */
+
+.skills-slide {
+    justify-content: center;
+}
+
+.skills-header {
+    margin-bottom: 3rem;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.3rem;
+}
+
+.skill-card {
+    min-height: 250px;
+
+    padding: 2rem;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,.45);
+
+    border: 1px solid rgba(37,37,37,.1);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.skill-number {
+    font-family: "Playfair Display", serif;
+
+    font-size: 3rem;
+
+    color: var(--terracotta);
+}
+
+.skill-card h3 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 1.8rem;
+
+    margin-bottom: .7rem;
+}
+
+.skill-card p {
+    color: #666;
+
+    font-size: .75rem;
+
+    line-height: 1.6;
+}
+
+/* =========================================================
+   SLIDE 7 — KINDNESS
+========================================================= */
+
+.kindness-slide {
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+.kindness-slide h1 {
+    font-size: clamp(4rem, 10vw, 10rem);
+
+    max-width: 1100px;
+
+    margin-bottom: 2rem;
+}
+
+.kindness-subtitle {
+    font-size: .9rem;
+
+    color: #666;
+
+    max-width: 600px;
+
+    line-height: 1.7;
+}
+
+.final-photo {
+    margin-top: 2.5rem;
+
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+
+    background-image: url("images/final.jpg");
+
+    background-size: cover;
+    background-position: center;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navigation {
+    position: fixed;
+
+    bottom: 2rem;
+    right: 3rem;
+
+    display: flex;
+    align-items: center;
+
+    gap: .8rem;
+
+    z-index: 100;
+}
+
+.nav-button {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid rgba(37,37,37,.18);
+
+    background: rgba(246,241,232,.8);
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.nav-button:hover {
+    background: var(--charcoal);
+    color: white;
+}
+
+.slide-counter {
+    font-size: .65rem;
+    letter-spacing: .15em;
+    font-weight: 700;
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    height: 3px;
+
+    background: var(--terracotta);
+
+    width: 0;
+
+    transition: width .5s ease;
+
+    z-index: 200;
+}
+
+/* =========================================================
+   FULLSCREEN BUTTON
+========================================================= */
+
+.fullscreen {
+    position: fixed;
+
+    top: 1.7rem;
+    right: 2rem;
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(37,37,37,.15);
+
+    background: rgba(246,241,232,.75);
+
+    cursor: pointer;
+
+    z-index: 100;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .slide {
+        padding: 5vh 6vw;
+        overflow-y: auto;
+    }
+
+    .slide-intro,
+    .chapter-layout,
+    .korea-layout,
+    .global-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-frame,
+    .chapter-image,
+    .korea-image,
+    .global-image {
+        height: 45vh;
+    }
+
+    .travel-header {
+        display: block;
+    }
+
+    .travel-intro {
+        width: auto;
+        margin-top: .8rem;
+    }
+
+    .travel-map-container {
+        min-height: 60vh;
+    }
+
+    .destination-card {
+        right: 50%;
+        transform: translate(50%, -50%) translateY(20px);
+    }
+
+    .destination-card.open {
+        transform: translate(50%, -50%) translateY(0);
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .global-connections {
+        grid-template-columns: 1fr;
+    }
+
+    .korea-stats {
+        gap: 1.5rem;
+    }
+
+    .travel-hint {
+        display: none;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="presentation">
+
+<div class="progress" id="progress"></div>
+
+
+<!-- =====================================================
+     SLIDE 1
+===================================================== -->
+
+<section class="slide slide-intro active">
+
+    <div class="intro-copy">
+
+        <div class="eyebrow">
+            Personal Introduction
+        </div>
+
+        <h1>
+            Hello,<br>
+            I'm Mikaella.
+        </h1>
+
+        <p class="subtitle">
+            I joined the team three months ago and I'm passionate
+            about people, travel and discovering new cultures.
+        </p>
+
+        <div class="intro-tags">
+
+            <span class="tag">Extrovert</span>
+            <span class="tag">Traveler</span>
+            <span class="tag">Foodie</span>
+            <span class="tag">People Person</span>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="photo-frame photo-portrait">
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SLIDE 2 — THE TRAVEL BUG
+===================================================== -->
+
+<section class="slide travel-slide">
+
+    <div class="travel-header">
+
+        <div>
+
+            <div class="eyebrow">
+                Chapter 01
+            </div>
+
+            <h2>
+                The Travel Bug
+            </h2>
+
+        </div>
+
+
+        <p class="travel-intro">
+
+            Exploring the world through local scenery,
+            new experiences, horseback riding — and food.
+
+        </p>
+
+    </div>
+
+
+    <div class="travel-map-container">
+
+
+        <!-- =================================================
+             WORLD MAP (real map, recolored to the project palette)
+        ================================================== -->
+
+        <div class="map-stage" id="mapStage">
+
+            <img
+                class="world-map-img"
+                src="images/world-map.png""
+                alt="World map"
+            >
+
+            <svg
+                id="worldMap"
+                class="map-overlay"
+                viewBox="0 0 1260 750"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+
+                <!-- =================================================
+                     TRAVEL ROUTE (drawn dynamically in JS so it always
+                     passes exactly through every destination point)
+                ================================================== -->
+
+                <path
+                    id="travelRoute"
+                    class="route"
+                    d=""
+                />
+
+
+                <!-- =================================================
+                     DESTINATION: DUBAI
+                ================================================== -->
+
+                <g
+                    class="destination"
+                    data-destination="dubai"
+                    data-index="0"
+                >
+
+                    <circle
+                        class="outer-ring"
+                        cx="772"
+                        cy="378"
+                        r="11"
+                    />
+
+                    <circle
+                        class="point"
+                        cx="772"
+                        cy="378"
+                        r="5"
+                    />
+
+                    <text
+                        class="destination-label"
+                        x="752"
+                        y="363"
+                        text-anchor="end"
+                    >
+                        DUBAI
+                    </text>
+
+                </g>
+
+
+                <!-- =================================================
+                     DESTINATION: THAILAND
+                ================================================== -->
+
+                <g
+                    class="destination"
+                    data-destination="thailand"
+                    data-index="1"
+                >
+
+                    <circle
+                        class="outer-ring"
+                        cx="968"
+                        cy="388"
+                        r="11"
+                    />
+
+                    <circle
+                        class="point"
+                        cx="968"
+                        cy="388"
+                        r="5"
+                    />
+
+                    <text
+                        class="destination-label"
+                        x="990"
+                        y="383"
+                    >
+                        THAILAND
+                    </text>
+
+                </g>
+
+
+                <!-- =================================================
+                     DESTINATION: MALAYSIA
+                ================================================== -->
+
+                <g
+                    class="destination"
+                    data-destination="malaysia"
+                    data-index="2"
+                >
+
+                    <circle
+                        class="outer-ring"
+                        cx="995"
+                        cy="408"
+                        r="11"
+                    />
+
+                    <circle
+                        class="point"
+                        cx="995"
+                        cy="408"
+                        r="5"
+                    />
+
+                    <text
+                        class="destination-label"
+                        x="1017"
+                        y="415"
+                    >
+                        MALAYSIA
+                    </text>
+
+                </g>
+
+
+                <!-- =================================================
+                     DESTINATION: SINGAPORE
+                ================================================== -->
+
+                <g
+                    class="destination"
+                    data-destination="singapore"
+                    data-index="3"
+                >
+
+                    <circle
+                        class="outer-ring"
+                        cx="1008"
+                        cy="428"
+                        r="11"
+                    />
+
+                    <circle
+                        class="point"
+                        cx="1008"
+                        cy="428"
+                        r="5"
+                    />
+
+                    <text
+                        class="destination-label"
+                        x="1030"
+                        y="445"
+                    >
+                        SINGAPORE
+                    </text>
+
+                </g>
+
+
+                <!-- =================================================
+                     DESTINATION: AUSTRALIA
+                ================================================== -->
+
+                <g
+                    class="destination"
+                    data-destination="australia"
+                    data-index="4"
+                >
+
+                    <circle
+                        class="outer-ring"
+                        cx="1128"
+                        cy="545"
+                        r="11"
+                    />
+
+                    <circle
+                        class="point"
+                        cx="1128"
+                        cy="545"
+                        r="5"
+                    />
+
+                    <text
+                        class="destination-label"
+                        x="1153"
+                        y="550"
+                    >
+                        AUSTRALIA
+                    </text>
+
+                </g>
+
+
+                <!-- =================================================
+                     DESTINATION: HONG KONG
+                ================================================== -->
+
+                <g
+                    class="destination"
+                    data-destination="hong-kong"
+                    data-index="5"
+                >
+
+                    <circle
+                        class="outer-ring"
+                        cx="1044"
+                        cy="300"
+                        r="11"
+                    />
+
+                    <circle
+                        class="point"
+                        cx="1044"
+                        cy="300"
+                        r="5"
+                    />
+
+                    <text
+                        class="destination-label"
+                        x="1069"
+                        y="295"
+                    >
+                        HONG KONG
+                    </text>
+
+                </g>
+
+
+                <!-- =================================================
+                     DESTINATION: MACAU
+                ================================================== -->
+
+                <g
+                    class="destination"
+                    data-destination="macau"
+                    data-index="6"
+                >
+
+                    <circle
+                        class="outer-ring"
+                        cx="1030"
+                        cy="302"
+                        r="11"
+                    />
+
+                    <circle
+                        class="point"
+                        cx="1030"
+                        cy="302"
+                        r="5"
+                    />
+
+                    <text
+                        class="destination-label"
+                        x="1005"
+                        y="297"
+                        text-anchor="end"
+                    >
+                        MACAU
+                    </text>
+
+                </g>
+
+            </svg>
+
+
+            <!-- =================================================
+                 AIRPLANE
+            ================================================== -->
+
+            <div
+                id="airplane"
+                class="airplane"
+            >
+
+                <svg
+                    viewBox="0 0 64 64"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+
+                    <path
+                        d="
+                        M56 31
+                        L37 25
+                        L29 8
+                        L23 8
+                        L25 27
+                        L10 23
+                        L5 28
+                        L25 35
+                        L23 54
+                        L29 54
+                        L37 37
+                        L56 33
+                        Z
+                        "
+                    />
+
+                </svg>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             COUNTER
+        ================================================== -->
+
+        <div class="travel-counter">
+
+            <strong>7</strong>
+            destinations
+
+        </div>
+
+
+        <div class="travel-hint">
+            Click a destination to explore
+        </div>
+
+
+        <!-- =================================================
+             DESTINATION CARD
+        ================================================= -->
+
+        <div
+            id="destinationCard"
+            class="destination-card"
+        >
+
+            <button
+                id="closeCard"
+                class="close-card"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+            <div
+                id="destinationCarousel"
+                class="destination-card-carousel"
+            >
+                <div
+                    id="destinationCarouselTrack"
+                    class="destination-card-carousel-track"
+                ></div>
+
+                <button
+                    id="destinationCarouselPrev"
+                    class="destination-card-carousel-button prev"
+                    type="button"
+                    aria-label="Previous photo"
+                >←</button>
+
+                <button
+                    id="destinationCarouselNext"
+                    class="destination-card-carousel-button next"
+                    type="button"
+                    aria-label="Next photo"
+                >→</button>
+
+                <div
+                    id="destinationCarouselDots"
+                    class="destination-card-carousel-dots"
+                ></div>
+            </div>
+
+
+            <div class="destination-card-content">
+
+                <div
+                    id="destinationRegion"
+                    class="destination-card-region"
+                >
+                    Travel memory
+                </div>
+
+
+                <div class="destination-card-title-row">
+                    <span
+                        id="destinationFlag"
+                        class="destination-card-flag"
+                        aria-hidden="true"
+                    >🇭🇰</span>
+
+                    <h3 id="destinationTitle">
+                        Hong Kong
+                    </h3>
+                </div>
+
+
+                <p id="destinationText">
+                    One of the destinations I've explored while
+                    discovering new places, cultures and experiences.
+                </p>
+
+
+                <div class="destination-interests">
+
+                    <span>Local scenery</span>
+                    <span>Food</span>
+                    <span>New experiences</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SLIDE 3 — LIFE'S BEAUTIFUL CHAPTERS
+===================================================== -->
+
+<section class="slide chapters-slide">
+
+    <div class="eyebrow">
+        Chapter 02
+    </div>
+
+    <h2>
+        Life's Beautiful Chapters
+    </h2>
+
+
+    <div class="chapter-layout">
+
+        <div class="chapter-image">
+
+    <div class="chapter-carousel" id="chapter2Carousel">
+
+        <div class="chapter-carousel-track" id="chapter2CarouselTrack">
+
+            <!-- CHAPTER 02 — 4 PHOTO SLOTS -->
+            <div class="chapter-carousel-slide"
+                 style="background-image: url('images/family-1.jpg');"></div>
+
+            <div class="chapter-carousel-slide"
+                 style="background-image: url('images/family-2.jpg');"></div>
+
+            <div class="chapter-carousel-slide"
+                 style="background-image: url('images/family-3.jpg');"></div>
+
+            <div class="chapter-carousel-slide"
+                 style="background-image: url('images/family-4.jpg');"></div>
+
+        </div>
+
+        <button class="chapter-carousel-button prev"
+                id="chapter2Prev"
+                type="button"
+                aria-label="Previous Chapter 2 photo">←</button>
+
+        <button class="chapter-carousel-button next"
+                id="chapter2Next"
+                type="button"
+                aria-label="Next Chapter 2 photo">→</button>
+
+        <div class="chapter-carousel-dots" id="chapter2CarouselDots">
+            <button class="chapter-carousel-dot active" type="button" aria-label="Photo 1"></button>
+            <button class="chapter-carousel-dot" type="button" aria-label="Photo 2"></button>
+            <button class="chapter-carousel-dot" type="button" aria-label="Photo 3"></button>
+            <button class="chapter-carousel-dot" type="button" aria-label="Photo 4"></button>
+        </div>
+
+    </div>
+
+</div>
+
+
+        <div class="timeline" id="chapterTimeline">
+
+            <div class="timeline-runner" id="timelineRunner"></div>
+
+            <div class="timeline-item">
+
+                <div class="timeline-year">
+                    2011
+                </div>
+
+                <div class="timeline-title">
+                    Nursing
+                </div>
+
+                <div class="timeline-text">
+                    I graduated as a nurse in 2011.
+                    My path, however, wasn't a straight line.
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-year">
+                    FAMILY
+                </div>
+
+                <div class="timeline-title">
+                    Proud Mom of Two Boys
+                </div>
+
+                <div class="timeline-text">
+                    I prioritized my family and became a full-time
+                    mom to my two boys, now 14 and 10.
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-year">
+                    7 YEARS
+                </div>
+
+                <div class="timeline-title">
+                    Family Business
+                </div>
+
+                <div class="timeline-text">
+                    I helped run our family café, bar and restaurant
+                    for seven years, learning hospitality,
+                    customer service and how to stay calm when busy.
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-year">
+                    TODAY
+                </div>
+
+                <div class="timeline-title">
+                    A New Chapter
+                </div>
+
+                <div class="timeline-text">
+                    Every chapter taught me something valuable
+                    and prepared me for the next one.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SLIDE 4 — KOREA
+===================================================== -->
+
+<section class="slide korea-slide">
+
+    <div class="korea-layout">
+
+        <div class="korea-image">
+
+    <div class="korea-carousel" id="koreaCarousel">
+
+        <div class="korea-carousel-track" id="koreaCarouselTrack">
+
+            <!-- CHAPTER 3 — 4 PHOTO SLOTS -->
+            <div class="korea-carousel-slide"
+                 style="background-image: url('images/korea-1.jpg');"></div>
+
+            <div class="korea-carousel-slide"
+                 style="background-image: url('images/korea-2.jpg');"></div>
+
+            <div class="korea-carousel-slide"
+                 style="background-image: url('images/korea-3.jpg');"></div>
+
+            <div class="korea-carousel-slide"
+                 style="background-image: url('images/korea-4.jpg');"></div>
+
+        </div>
+
+        <button class="korea-carousel-button prev"
+                id="koreaPrev"
+                type="button"
+                aria-label="Previous Korea photo">←</button>
+
+        <button class="korea-carousel-button next"
+                id="koreaNext"
+                type="button"
+                aria-label="Next Korea photo">→</button>
+
+        <div class="korea-carousel-dots" id="koreaCarouselDots">
+            <button class="korea-carousel-dot active" type="button" aria-label="Photo 1"></button>
+            <button class="korea-carousel-dot" type="button" aria-label="Photo 2"></button>
+            <button class="korea-carousel-dot" type="button" aria-label="Photo 3"></button>
+            <button class="korea-carousel-dot" type="button" aria-label="Photo 4"></button>
+        </div>
+
+    </div>
+
+</div>
+
+
+        <div class="korea-copy">
+
+            <div class="eyebrow">
+                Chapter 03
+            </div>
+
+            <h2>
+                My Journey<br>
+                to Korea
+            </h2>
+
+
+            <p class="subtitle">
+
+                A leap of faith that opened a new chapter
+                in my personal and professional life.
+
+            </p>
+
+
+            <div class="korea-arrow">
+                Philippines → Korea
+            </div>
+
+
+            <div class="korea-stats">
+
+                <div class="stat">
+
+                    <strong>2024</strong>
+
+                    <span>
+                        Moved to Korea
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong>15</strong>
+
+                    <span>
+                        Months Teaching
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SLIDE 5 — GLOBAL
+===================================================== -->
+
+<section class="slide global-slide">
+
+    <div class="global-layout">
+
+        <div>
+
+            <div class="eyebrow">
+                Chapter 04
+            </div>
+
+            <h2>
+                My World<br>
+                Is Global
+            </h2>
+
+
+            <p class="subtitle">
+
+                Filipino roots, family in Australia,
+                Colombian love, and a new life in Korea.
+
+            </p>
+
+
+            <div class="global-connections">
+
+                <div class="connection">
+
+                    <strong>Philippines</strong>
+
+                    <span>
+                        My roots and where my children
+                        and mother are currently home.
+                    </span>
+
+                </div>
+
+
+                <div class="connection">
+
+                    <strong>Australia</strong>
+
+                    <span>
+                        Where my siblings live.
+                    </span>
+
+                </div>
+
+
+                <div class="connection">
+
+                    <strong>Colombia</strong>
+
+                    <span>
+                        My girlfriend's heritage.
+                    </span>
+
+                </div>
+
+
+                <div class="connection">
+
+                    <strong>Korea</strong>
+
+                    <span>
+                        Where a new professional
+                        chapter is unfolding.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="global-image">
+
+    <div class="chapter-carousel" id="chapter4Carousel">
+
+        <div class="chapter-carousel-track" id="chapter4CarouselTrack">
+
+            <!-- CHAPTER 04 — 4 PHOTO SLOTS -->
+            <div class="chapter-carousel-slide"
+                 style="background-image: url('images/global-1.jpg');"></div>
+
+            <div class="chapter-carousel-slide"
+                 style="background-image: url('images/global-2.jpg');"></div>
+
+            <div class="chapter-carousel-slide"
+                 style="background-image: url('images/global-3.jpg');"></div>
+
+            <div class="chapter-carousel-slide"
+                 style="background-image: url('images/global-4.jpg');"></div>
+
+        </div>
+
+        <button class="chapter-carousel-button prev"
+                id="chapter4Prev"
+                type="button"
+                aria-label="Previous Chapter 4 photo">←</button>
+
+        <button class="chapter-carousel-button next"
+                id="chapter4Next"
+                type="button"
+                aria-label="Next Chapter 4 photo">→</button>
+
+        <div class="chapter-carousel-dots" id="chapter4CarouselDots">
+            <button class="chapter-carousel-dot active" type="button" aria-label="Photo 1"></button>
+            <button class="chapter-carousel-dot" type="button" aria-label="Photo 2"></button>
+            <button class="chapter-carousel-dot" type="button" aria-label="Photo 3"></button>
+            <button class="chapter-carousel-dot" type="button" aria-label="Photo 4"></button>
+        </div>
+
+    </div>
+
+</div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SLIDE 6 — WHAT I BRING
+===================================================== -->
+
+<section class="slide skills-slide">
+
+    <div class="skills-header">
+
+        <div class="eyebrow">
+            Chapter 05
+        </div>
+
+        <h2>
+            What I Bring
+        </h2>
+
+        <p class="subtitle">
+            Different experiences, one mindset:
+            learn, adapt and connect.
+        </p>
+
+    </div>
+
+
+    <div class="skills-grid">
+
+        <div class="skill-card">
+
+            <div class="skill-number">
+                01
+            </div>
+
+            <div>
+
+                <h3>
+                    Learn
+                </h3>
+
+                <p>
+                    An open mind and a strong willingness
+                    to learn something new.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="skill-card">
+
+            <div class="skill-number">
+                02
+            </div>
+
+            <div>
+
+                <h3>
+                    Connect
+                </h3>
+
+                <p>
+                    People skills, hospitality experience
+                    and a genuine love of working with others.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="skill-card">
+
+            <div class="skill-number">
+                03
+            </div>
+
+            <div>
+
+                <h3>
+                    Deliver
+                </h3>
+
+                <p>
+                    Strong work ethic, adaptability
+                    and the ability to stay calm when things get busy.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SLIDE 7 — KINDNESS
+===================================================== -->
+
+<section class="slide kindness-slide">
+
+    <div class="eyebrow">
+        The Value I Believe In
+    </div>
+
+
+    <h1>
+        CHOOSE<br>
+        KINDNESS.
+    </h1>
+
+
+    <p class="kindness-subtitle">
+
+        If I have to choose between being the best
+        and being kind, I will always choose kindness.
+
+        A supportive and kind team can achieve anything.
+
+        <br><br>
+
+        Thank you for welcoming me.
+        I'm excited to learn, work, mix and mingle with everyone.
+
+    </p>
+
+
+    <div class="final-photo"></div>
+
+</section>
+
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<div class="navigation">
+
+    <button
+        class="nav-button"
+        id="prevButton"
+        aria-label="Previous slide"
+    >
+        ←
+    </button>
+
+
+    <div
+        id="slideCounter"
+        class="slide-counter"
+    >
+        01 / 07
+    </div>
+
+
+    <button
+        class="nav-button"
+        id="nextButton"
+        aria-label="Next slide"
+    >
+        →
+    </button>
+
+</div>
+
+
+<button
+    id="fullscreenButton"
+    class="fullscreen"
+    title="Fullscreen"
+>
+    ⛶
+</button>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   PRESENTATION NAVIGATION
+========================================================= */
+
+const slides = document.querySelectorAll(".slide");
+
+const prevButton = document.getElementById("prevButton");
+const nextButton = document.getElementById("nextButton");
+
+const slideCounter = document.getElementById("slideCounter");
+const progress = document.getElementById("progress");
+
+let currentSlide = 0;
+
+
+function showSlide(index) {
+
+    if (index < 0) {
+        index = slides.length - 1;
+    }
+
+    if (index >= slides.length) {
+        index = 0;
+    }
+
+    currentSlide = index;
+
+
+    slides.forEach((slide, i) => {
+
+        slide.classList.toggle(
+            "active",
+            i === currentSlide
+        );
+
+    });
+
+
+    const number =
+        String(currentSlide + 1).padStart(2, "0");
+
+    slideCounter.textContent =
+        `${number} / ${String(slides.length).padStart(2, "0")}`;
+
+
+    const percentage =
+        ((currentSlide + 1) / slides.length) * 100;
+
+    progress.style.width =
+        `${percentage}%`;
+
+
+    if (currentSlide === 1) {
+
+        startTravelAnimation();
+
+    }
+
+    if (currentSlide === 2) {
+
+        startChapterAnimation();
+
+    } else {
+
+        resetChapterAnimation();
+
+    }
+
+}
+
+
+function nextSlide() {
+
+    showSlide(currentSlide + 1);
+
+}
+
+
+function previousSlide() {
+
+    showSlide(currentSlide - 1);
+
+}
+
+
+nextButton.addEventListener(
+    "click",
+    nextSlide
+);
+
+prevButton.addEventListener(
+    "click",
+    previousSlide
+);
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "ArrowRight" ||
+            event.key === " " ||
+            event.key === "PageDown"
+        ) {
+
+            event.preventDefault();
+
+            nextSlide();
+
+        }
+
+
+        if (
+            event.key === "ArrowLeft" ||
+            event.key === "PageUp"
+        ) {
+
+            event.preventDefault();
+
+            previousSlide();
+
+        }
+
+
+        if (
+            event.key.toLowerCase() === "f"
+        ) {
+
+            toggleFullscreen();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+const fullscreenButton =
+    document.getElementById("fullscreenButton");
+
+
+function toggleFullscreen() {
+
+    if (!document.fullscreenElement) {
+
+        document.documentElement.requestFullscreen()
+            .catch(() => {});
+
+    } else {
+
+        document.exitFullscreen();
+
+    }
+
+}
+
+
+fullscreenButton.addEventListener(
+    "click",
+    toggleFullscreen
+);
+
+
+/* =========================================================
+   TOUCH / SWIPE
+========================================================= */
+
+let touchStartX = 0;
+
+
+document.addEventListener(
+    "touchstart",
+    event => {
+
+        touchStartX =
+            event.changedTouches[0].screenX;
+
+    },
+    { passive: true }
+);
+
+
+document.addEventListener(
+    "touchend",
+    event => {
+
+        const touchEndX =
+            event.changedTouches[0].screenX;
+
+        const difference =
+            touchEndX - touchStartX;
+
+
+        if (Math.abs(difference) < 50) {
+            return;
+        }
+
+
+        if (difference < 0) {
+
+            nextSlide();
+
+        } else {
+
+            previousSlide();
+
+        }
+
+    },
+    { passive: true }
+);
+
+
+/* =========================================================
+   TRAVEL DESTINATIONS
+========================================================= */
+
+const destinations = {
+    "macau": {
+        title: "Macau",
+        region: "Travel memory",
+        flag: "🇲🇴",
+        images: ["images/macau.jpg", "images/macau-2.jpg"],
+        text:
+            "One of the destinations I've explored while discovering new places, cultures and experiences."
+    },
+
+    "hong-kong": {
+        title: "Hong Kong",
+        region: "Travel memory",
+        flag: "🇭🇰",
+        images: ["images/hong-kong.jpg", "images/hong-kong-2.jpg"],
+        text:
+            "One of the destinations I've explored while discovering new places, cultures and experiences."
+    },
+
+    "singapore": {
+        title: "Singapore",
+        region: "Travel memory",
+        flag: "🇸🇬",
+        images: ["images/singapore.jpg", "images/singapore-2.jpg"],
+        text:
+            "One of the destinations I've explored while discovering new places, cultures and experiences."
+    },
+
+    "australia": {
+        title: "Australia",
+        region: "Travel memory",
+        flag: "🇦🇺",
+        images: ["images/australia.jpg", "images/australia-2.jpg"],
+        text:
+            "One of the destinations I've explored while discovering new places, cultures and experiences."
+    },
+
+    "dubai": {
+        title: "Dubai",
+        region: "Travel memory",
+        flag: "🇦🇪",
+        images: ["images/dubai.jpg", "images/dubai-2.jpg"],
+        text:
+            "One of the destinations I've explored while discovering new places, cultures and experiences."
+    },
+
+    "malaysia": {
+        title: "Malaysia",
+        region: "Travel memory",
+        flag: "🇲🇾",
+        images: ["images/malaysia.jpg", "images/malaysia-2.jpg"],
+        text:
+            "One of the destinations I've explored while discovering new places, cultures and experiences."
+    },
+
+    "thailand": {
+        title: "Thailand",
+        region: "Travel memory",
+        flag: "🇹🇭",
+        images: ["images/thailand.jpg", "images/thailand-2.jpg"],
+        text:
+            "One of the destinations I've explored while discovering new places, cultures and experiences."
+    }
+};
+
+
+const destinationElements =
+    document.querySelectorAll(".destination");
+
+
+const destinationCard =
+    document.getElementById("destinationCard");
+
+
+const destinationCarousel =
+    document.getElementById("destinationCarousel");
+
+const destinationCarouselTrack =
+    document.getElementById("destinationCarouselTrack");
+
+const destinationCarouselDots =
+    document.getElementById("destinationCarouselDots");
+
+const destinationCarouselPrev =
+    document.getElementById("destinationCarouselPrev");
+
+const destinationCarouselNext =
+    document.getElementById("destinationCarouselNext");
+
+const destinationFlag =
+    document.getElementById("destinationFlag");
+
+
+const destinationTitle =
+    document.getElementById("destinationTitle");
+
+
+const destinationRegion =
+    document.getElementById("destinationRegion");
+
+
+const destinationText =
+    document.getElementById("destinationText");
+
+
+const closeCard =
+    document.getElementById("closeCard");
+
+
+/* =========================================================
+   DESTINATION POPUP PHOTO CAROUSEL
+   Two photos per destination — same 5s timing and
+   smooth transition language as the existing chapter carousels.
+========================================================= */
+
+let destinationCarouselIndex = 0;
+let destinationCarouselTimer = null;
+
+function updateDestinationCarousel(index) {
+
+    if (!destinationCarouselTrack) {
+        return;
+    }
+
+    const slides =
+        destinationCarouselTrack.querySelectorAll(
+            ".destination-card-carousel-slide"
+        );
+
+    const dots =
+        destinationCarouselDots
+            ? destinationCarouselDots.querySelectorAll(
+                ".destination-card-carousel-dot"
+            )
+            : [];
+
+    if (!slides.length) {
+        return;
+    }
+
+    destinationCarouselIndex =
+        (index + slides.length) % slides.length;
+
+    destinationCarouselTrack.style.transform =
+        `translateX(-${destinationCarouselIndex * 100}%)`;
+
+    dots.forEach((dot, i) => {
+        dot.classList.toggle(
+            "active",
+            i === destinationCarouselIndex
+        );
+    });
+}
+
+function restartDestinationCarouselTimer() {
+
+    clearInterval(destinationCarouselTimer);
+
+    destinationCarouselTimer = setInterval(() => {
+        updateDestinationCarousel(
+            destinationCarouselIndex + 1
+        );
+    }, 5000);
+}
+
+function buildDestinationCarousel(images) {
+
+    if (!destinationCarouselTrack ||
+        !destinationCarouselDots) {
+        return;
+    }
+
+    clearInterval(destinationCarouselTimer);
+
+    destinationCarouselTrack.innerHTML = "";
+    destinationCarouselDots.innerHTML = "";
+
+    images.slice(0, 2).forEach((image, index) => {
+
+        const slide =
+            document.createElement("div");
+
+        slide.className =
+            "destination-card-carousel-slide";
+
+        slide.style.backgroundImage =
+            `url("${image}")`;
+
+        destinationCarouselTrack.appendChild(slide);
+
+
+        const dot =
+            document.createElement("button");
+
+        dot.type = "button";
+        dot.className =
+            "destination-card-carousel-dot";
+
+        dot.setAttribute(
+            "aria-label",
+            `Photo ${index + 1}`
+        );
+
+        dot.addEventListener("click", event => {
+
+            event.stopPropagation();
+
+            updateDestinationCarousel(index);
+            restartDestinationCarouselTimer();
+
+        });
+
+        destinationCarouselDots.appendChild(dot);
+
+    });
+
+    destinationCarouselIndex = 0;
+
+    updateDestinationCarousel(0);
+
+    restartDestinationCarouselTimer();
+}
+
+function nextDestinationPhoto() {
+
+    updateDestinationCarousel(
+        destinationCarouselIndex + 1
+    );
+
+    restartDestinationCarouselTimer();
+}
+
+function previousDestinationPhoto() {
+
+    updateDestinationCarousel(
+        destinationCarouselIndex - 1
+    );
+
+    restartDestinationCarouselTimer();
+}
+
+if (destinationCarouselNext) {
+
+    destinationCarouselNext.addEventListener(
+        "click",
+        event => {
+
+            event.stopPropagation();
+            nextDestinationPhoto();
+
+        }
+    );
+
+}
+
+if (destinationCarouselPrev) {
+
+    destinationCarouselPrev.addEventListener(
+        "click",
+        event => {
+
+            event.stopPropagation();
+            previousDestinationPhoto();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   OPEN DESTINATION
+========================================================= */
+
+function openDestination(destinationName) {
+
+    const destination =
+        destinations[destinationName];
+
+
+    if (!destination) {
+        return;
+    }
+
+
+    destinationTitle.textContent =
+        destination.title;
+
+
+    destinationRegion.textContent =
+        destination.region;
+
+
+    destinationText.textContent =
+        destination.text;
+
+
+    destinationFlag.textContent =
+        destination.flag;
+
+    buildDestinationCarousel(
+        destination.images
+    );
+
+
+    destinationElements.forEach(
+        element => {
+
+            element.classList.remove(
+                "selected"
+            );
+
+        }
+    );
+
+
+    const selected =
+        document.querySelector(
+            `[data-destination="${destinationName}"]`
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "selected"
+        );
+
+    }
+
+
+    destinationCard.classList.add(
+        "open"
+    );
+
+}
+
+
+destinationElements.forEach(
+    element => {
+
+        element.addEventListener(
+            "click",
+            () => {
+
+                const destination =
+                    element.dataset.destination;
+
+                openDestination(destination);
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE DESTINATION
+========================================================= */
+
+closeCard.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
+
+        destinationCard.classList.remove(
+            "open"
+        );
+
+
+        destinationElements.forEach(
+            element => {
+
+                element.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TRAVEL ANIMATION
+========================================================= */
+
+/*
+   The animation follows the same destinations
+   shown on the map.
+
+   Order:
+   Dubai
+   Thailand
+   Malaysia
+   Singapore
+   Australia
+   Hong Kong
+   Macau
+*/
+
+
+const travelStops = [
+
+    { x: 772, y: 378 },   // dubai
+    { x: 968, y: 388 },   // thailand
+    { x: 995, y: 408 },   // malaysia
+    { x: 1008, y: 428 },  // singapore
+    { x: 1128, y: 545 },  // australia
+    { x: 1044, y: 300 },  // hong-kong
+    { x: 1030, y: 302 }   // macau
+
+];
+
+
+const airplane =
+    document.getElementById("airplane");
+
+
+const mapStage =
+    document.getElementById("mapStage");
+
+
+const travelRoutePath =
+    document.getElementById("travelRoute");
+
+
+let travelAnimationRunning =
+    false;
+
+
+/*
+   Build a smooth curve (Catmull-Rom converted to
+   cubic beziers) that passes exactly through every
+   destination point, in visiting order. This becomes
+   BOTH the dashed route drawn on the map AND the exact
+   path the airplane flies along, so the two can never
+   go out of sync.
+*/
+
+function buildRoutePath(points) {
+
+    let d = "";
+
+    for (let i = 0; i < points.length - 1; i++) {
+
+        const p0 =
+            points[i === 0 ? i : i - 1];
+
+        const p1 =
+            points[i];
+
+        const p2 =
+            points[i + 1];
+
+        const p3 =
+            points[i + 2 === points.length ? i + 1 : i + 2];
+
+        const cp1x = p1.x + (p2.x - p0.x) / 6;
+        const cp1y = p1.y + (p2.y - p0.y) / 6;
+
+        const cp2x = p2.x - (p3.x - p1.x) / 6;
+        const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+        if (i === 0) {
+            d += `M${p1.x},${p1.y} `;
+        }
+
+        d += `C${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y} `;
+
+    }
+
+    return d;
+
+}
+
+
+travelRoutePath.setAttribute(
+    "d",
+    buildRoutePath(travelStops)
+);
+
+
+/*
+   Position the airplane (an absolutely positioned div)
+   relative to the map-stage element, using the current
+   rendered size of the stage vs. the SVG's 1260x750
+   coordinate space. Because the image, the SVG overlay
+   and the airplane all share the exact same box
+   (map-stage), no extra offset math is needed.
+*/
+
+function placeAirplane(x, y, angleDeg) {
+
+    const stageRect =
+        mapStage.getBoundingClientRect();
+
+    const scaleX = stageRect.width / 1260;
+    const scaleY = stageRect.height / 750;
+
+    airplane.style.left =
+        `${x * scaleX - 17}px`;
+
+    airplane.style.top =
+        `${y * scaleY - 17}px`;
+
+    if (angleDeg !== null) {
+
+        airplane.style.transform =
+            `rotate(${angleDeg}deg)`;
+
+    }
+
+}
+
+
+function startTravelAnimation() {
+
+    if (travelAnimationRunning) {
+        return;
+    }
+
+    travelAnimationRunning = true;
+
+    destinationElements.forEach(
+        element => {
+
+            element.classList.remove(
+                "active-pulse"
+            );
+
+        }
+    );
+
+    const totalLength =
+        travelRoutePath.getTotalLength();
+
+    const stopCount =
+        travelStops.length;
+
+    // Each destination sits at an even fraction along the curve
+    const stopLengths =
+        travelStops.map(
+            (_, i) => (i / (stopCount - 1)) * totalLength
+        );
+
+    let stopIndex = 0;
+
+
+    function pointAt(length) {
+
+        const clamped =
+            Math.max(0, Math.min(totalLength, length));
+
+        return travelRoutePath.getPointAtLength(clamped);
+
+    }
+
+
+    function angleAt(length) {
+
+        const a = pointAt(length - 1);
+        const b = pointAt(length + 1);
+
+        return Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+
+    }
+
+
+    function travelToNextStop() {
+
+        if (stopIndex >= stopCount) {
+
+            travelAnimationRunning = false;
+
+            return;
+
+        }
+
+        const startLength =
+            stopIndex === 0
+                ? stopLengths[0]
+                : stopLengths[stopIndex - 1];
+
+        const endLength =
+            stopLengths[stopIndex];
+
+        let startTime = null;
+
+        const duration = 1000;
+
+
+        function animate(timestamp) {
+
+            if (!startTime) {
+                startTime = timestamp;
+            }
+
+            const elapsed =
+                timestamp - startTime;
+
+            const amount =
+                Math.min(elapsed / duration, 1);
+
+            /*
+               Smooth ease-in-out
+            */
+
+            const eased =
+                amount < .5
+                    ? 2 * amount * amount
+                    : 1 - Math.pow(-2 * amount + 2, 2) / 2;
+
+            const currentLength =
+                startLength + (endLength - startLength) * eased;
+
+            const position =
+                pointAt(currentLength);
+
+            const angle =
+                startLength === endLength
+                    ? angleAt(currentLength + 1)
+                    : angleAt(currentLength);
+
+            placeAirplane(
+                position.x,
+                position.y,
+                angle
+            );
+
+            if (amount < 1) {
+
+                requestAnimationFrame(animate);
+
+            } else {
+
+                highlightStop(stopIndex);
+
+                stopIndex++;
+
+                setTimeout(travelToNextStop, 350);
+
+            }
+
+        }
+
+        requestAnimationFrame(animate);
+
+    }
+
+    travelToNextStop();
+
+}
+
+
+/* =========================================================
+   HIGHLIGHT DESTINATION
+========================================================= */
+
+function highlightStop(index) {
+
+    const order = [
+
+        "dubai",
+        "thailand",
+        "malaysia",
+        "singapore",
+        "australia",
+        "hong-kong",
+        "macau"
+
+    ];
+
+
+    const destinationName =
+        order[index];
+
+
+    const element =
+        document.querySelector(
+            `[data-destination="${destinationName}"]`
+        );
+
+
+    if (!element) {
+        return;
+    }
+
+
+    element.classList.add(
+        "active-pulse"
+    );
+
+
+    setTimeout(
+        () => {
+
+            element.classList.remove(
+                "active-pulse"
+            );
+
+        },
+        1400
+    );
+
+}
+
+
+/* =========================================================
+   CHAPTER 02 + CHAPTER 04 — PHOTO CAROUSELS
+========================================================= */
+
+function initChapterCarousel(config) {
+
+    const carousel =
+        document.getElementById(config.carouselId);
+
+    const track =
+        document.getElementById(config.trackId);
+
+    const slides =
+        carousel
+            ? carousel.querySelectorAll(".chapter-carousel-slide")
+            : [];
+
+    const dots =
+        document.querySelectorAll(
+            `#${config.dotsId} .chapter-carousel-dot`
+        );
+
+    const prev =
+        document.getElementById(config.prevId);
+
+    const next =
+        document.getElementById(config.nextId);
+
+    if (!carousel || !track || !slides.length) {
+        return;
+    }
+
+    let index = 0;
+    let timer = null;
+    let touchStartX = 0;
+
+    function update(nextIndex) {
+
+        index =
+            (nextIndex + slides.length) %
+            slides.length;
+
+        track.style.transform =
+            `translateX(-${index * 100}%)`;
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle(
+                "active",
+                i === index
+            );
+        });
+    }
+
+    function restartTimer() {
+
+        clearInterval(timer);
+
+        timer = setInterval(() => {
+            update(index + 1);
+        }, 5000);
+    }
+
+    function goNext() {
+        update(index + 1);
+        restartTimer();
+    }
+
+    function goPrevious() {
+        update(index - 1);
+        restartTimer();
+    }
+
+    if (next) {
+        next.addEventListener("click", goNext);
+    }
+
+    if (prev) {
+        prev.addEventListener("click", goPrevious);
+    }
+
+    dots.forEach((dot, dotIndex) => {
+
+        dot.addEventListener("click", () => {
+            update(dotIndex);
+            restartTimer();
+        });
+
+    });
+
+    carousel.addEventListener(
+        "touchstart",
+        event => {
+            touchStartX =
+                event.changedTouches[0].screenX;
+        },
+        { passive: true }
+    );
+
+    carousel.addEventListener(
+        "touchend",
+        event => {
+
+            const difference =
+                event.changedTouches[0].screenX -
+                touchStartX;
+
+            if (Math.abs(difference) < 45) {
+                return;
+            }
+
+            if (difference < 0) {
+                goNext();
+            } else {
+                goPrevious();
+            }
+
+        },
+        { passive: true }
+    );
+
+    // One photo every 5 seconds.
+    restartTimer();
+}
+
+
+initChapterCarousel({
+    carouselId: "chapter2Carousel",
+    trackId: "chapter2CarouselTrack",
+    dotsId: "chapter2CarouselDots",
+    prevId: "chapter2Prev",
+    nextId: "chapter2Next"
+});
+
+
+initChapterCarousel({
+    carouselId: "chapter4Carousel",
+    trackId: "chapter4CarouselTrack",
+    dotsId: "chapter4CarouselDots",
+    prevId: "chapter4Prev",
+    nextId: "chapter4Next"
+});
+
+
+/* =========================================================
+   CHAPTER 3 — KOREA PHOTO CAROUSEL
+========================================================= */
+
+const koreaCarousel = document.getElementById("koreaCarousel");
+const koreaCarouselTrack = document.getElementById("koreaCarouselTrack");
+const koreaCarouselSlides = koreaCarousel
+    ? koreaCarousel.querySelectorAll(".korea-carousel-slide")
+    : [];
+const koreaCarouselDots = document.querySelectorAll(".korea-carousel-dot");
+const koreaPrev = document.getElementById("koreaPrev");
+const koreaNext = document.getElementById("koreaNext");
+
+let koreaCarouselIndex = 0;
+let koreaCarouselTimer = null;
+let koreaTouchStartX = 0;
+
+function updateKoreaCarousel(index) {
+
+    if (!koreaCarouselTrack || !koreaCarouselSlides.length) {
+        return;
+    }
+
+    koreaCarouselIndex =
+        (index + koreaCarouselSlides.length) %
+        koreaCarouselSlides.length;
+
+    koreaCarouselTrack.style.transform =
+        `translateX(-${koreaCarouselIndex * 100}%)`;
+
+    koreaCarouselDots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === koreaCarouselIndex);
+    });
+}
+
+function restartKoreaCarouselTimer() {
+
+    clearInterval(koreaCarouselTimer);
+
+    koreaCarouselTimer = setInterval(() => {
+        updateKoreaCarousel(koreaCarouselIndex + 1);
+    }, 5000);
+}
+
+function nextKoreaPhoto() {
+    updateKoreaCarousel(koreaCarouselIndex + 1);
+    restartKoreaCarouselTimer();
+}
+
+function previousKoreaPhoto() {
+    updateKoreaCarousel(koreaCarouselIndex - 1);
+    restartKoreaCarouselTimer();
+}
+
+if (koreaNext) {
+    koreaNext.addEventListener("click", nextKoreaPhoto);
+}
+
+if (koreaPrev) {
+    koreaPrev.addEventListener("click", previousKoreaPhoto);
+}
+
+koreaCarouselDots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+        updateKoreaCarousel(index);
+        restartKoreaCarouselTimer();
+    });
+});
+
+// Swipe on touch devices.
+if (koreaCarousel) {
+
+    koreaCarousel.addEventListener("touchstart", event => {
+        koreaTouchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
+
+    koreaCarousel.addEventListener("touchend", event => {
+
+        const difference =
+            event.changedTouches[0].screenX -
+            koreaTouchStartX;
+
+        if (Math.abs(difference) < 45) {
+            return;
+        }
+
+        if (difference < 0) {
+            nextKoreaPhoto();
+        } else {
+            previousKoreaPhoto();
+        }
+
+    }, { passive: true });
+}
+
+// Automatic movement: one photo every 5 seconds.
+restartKoreaCarouselTimer();
+
+
+/* =========================================================
+   SLIDE 3 — CHAPTERS TIMELINE ANIMATION
+========================================================= */
+
+const chapterTimeline =
+    document.getElementById("chapterTimeline");
+
+const timelineRunner =
+    document.getElementById("timelineRunner");
+
+const chapterItems =
+    chapterTimeline
+        ? chapterTimeline.querySelectorAll(".timeline-item")
+        : [];
+
+// Mirrors the transition-delay values set in CSS for
+// .timeline-item:nth-child(2..5), so the terracotta
+// runner can pause at each dot roughly as it lights up.
+const chapterDotDelays = [120, 500, 880, 1260];
+
+let chapterAnimationRunning = false;
+let chapterRunnerTimeouts = [];
+
+
+function resetChapterAnimation() {
+
+    if (!chapterTimeline) {
+        return;
+    }
+
+    chapterAnimationRunning = false;
+
+    chapterRunnerTimeouts.forEach(clearTimeout);
+    chapterRunnerTimeouts = [];
+
+    chapterTimeline.classList.remove("animate");
+
+    timelineRunner.style.opacity = 0;
+    timelineRunner.style.transition = "none";
+
+}
+
+
+function startChapterAnimation() {
+
+    if (!chapterTimeline || chapterAnimationRunning) {
+        return;
+    }
+
+    resetChapterAnimation();
+    chapterAnimationRunning = true;
+
+    // Force a reflow so re-adding "animate" reliably
+    // restarts every transition, even on a replay.
+    void chapterTimeline.offsetWidth;
+
+    requestAnimationFrame(() => {
+
+        chapterTimeline.classList.add("animate");
+
+        timelineRunner.style.transition =
+            "opacity .45s ease, top .8s cubic-bezier(.65,0,.35,1)";
+
+        runTimelineRunner();
+
+    });
+
+}
+
+
+// Sends the small terracotta marker walking down the
+// line, dot by dot — the vertical counterpart to the
+// airplane flying between destinations on slide 2.
+function runTimelineRunner() {
+
+    if (!chapterItems.length) {
+        return;
+    }
+
+    const stops =
+        Array.from(chapterItems).map(
+            item => item.offsetTop + 9
+        );
+
+    timelineRunner.style.top = `${stops[0]}px`;
+
+    chapterRunnerTimeouts.push(
+        setTimeout(() => {
+            timelineRunner.style.opacity = 1;
+        }, chapterDotDelays[0])
+    );
+
+    for (let i = 1; i < stops.length; i++) {
+
+        chapterRunnerTimeouts.push(
+            setTimeout(() => {
+                timelineRunner.style.top = `${stops[i]}px`;
+            }, chapterDotDelays[i])
+        );
+
+    }
+
+    chapterRunnerTimeouts.push(
+        setTimeout(() => {
+
+            timelineRunner.style.opacity = 0;
+            chapterAnimationRunning = false;
+
+        }, chapterDotDelays[chapterDotDelays.length - 1] + 1200)
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+showSlide(0);
+
+
+/*
+   Resize handling:
+   keeps the airplane positioned correctly
+   if the browser window changes size.
+*/
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            currentSlide === 1 &&
+            airplane.style.left &&
+            !travelAnimationRunning
+        ) {
+
+            const lastStop =
+                travelStops[
+                    travelStops.length - 1
+                ];
+
+            placeAirplane(
+                lastStop.x,
+                lastStop.y,
+                null
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
