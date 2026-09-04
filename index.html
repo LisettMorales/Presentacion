@@ -2999,56 +2999,6 @@ fullscreenButton.addEventListener(
 
 
 /* =========================================================
-   TOUCH / SWIPE
-========================================================= */
-
-let touchStartX = 0;
-
-
-document.addEventListener(
-    "touchstart",
-    event => {
-
-        touchStartX =
-            event.changedTouches[0].screenX;
-
-    },
-    { passive: true }
-);
-
-
-document.addEventListener(
-    "touchend",
-    event => {
-
-        const touchEndX =
-            event.changedTouches[0].screenX;
-
-        const difference =
-            touchEndX - touchStartX;
-
-
-        if (Math.abs(difference) < 50) {
-            return;
-        }
-
-
-        if (difference < 0) {
-
-            nextSlide();
-
-        } else {
-
-            previousSlide();
-
-        }
-
-    },
-    { passive: true }
-);
-
-
-/* =========================================================
    TRAVEL DESTINATIONS
 ========================================================= */
 
