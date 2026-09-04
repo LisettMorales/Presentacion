@@ -175,6 +175,7 @@ h2 {
     overflow: hidden;
     background-size: cover;
     background-position: center;
+    background-color: #ECE7DD;
     box-shadow: 0 25px 70px rgba(37,37,37,.13);
 }
 
@@ -526,6 +527,7 @@ h2 {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: #E6E3DD;
 }
 
 .destination-carousel-button {
@@ -699,24 +701,26 @@ h2 {
 
     /* ===== IMAGEN: images/family.jpg — COLOCA AQUÍ LA FOTO DE CHAPTER 01 ===== */
     background-image: url("images/family.jpg");
-    background-size: 112%;
+    background-size: 108%;
     background-position: center;
+    background-color: #ECE7DD;
 
     animation: chapterKenBurns 16s ease-in-out infinite alternate;
 }
 
 /* Very slow, subtle zoom/pan so the photo never feels
-   static while the timeline animates beside it. */
+   static while the timeline animates beside it. Kept gentle
+   (108% -> 114%) so the photo isn't over-cropped. */
 @keyframes chapterKenBurns {
 
     from {
-        background-size: 112%;
+        background-size: 108%;
         background-position: center;
     }
 
     to {
-        background-size: 124%;
-        background-position: center 38%;
+        background-size: 114%;
+        background-position: center 34%;
     }
 
 }
@@ -756,6 +760,7 @@ h2 {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: #E9E5DD;
 }
 
 .chapter-carousel-button {
@@ -1001,6 +1006,7 @@ h2 {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: #E9E5DD;
 }
 
 .korea-carousel-button {
@@ -1126,6 +1132,7 @@ h2 {
 
     background-size: cover;
     background-position: center;
+    background-color: #ECE7DD;
 }
 
 .global-connections {
@@ -1263,6 +1270,7 @@ h2 {
 
     background-size: cover;
     background-position: center;
+    background-color: #ECE7DD;
 }
 
 /* =========================================================
@@ -2616,6 +2624,106 @@ h2 {
 <script>
 
 /* =========================================================
+   SMART PHOTO FIT
+   Some source photos are much larger / a very different
+   aspect ratio than the frame that displays them, so a
+   plain "background-size: cover" ends up cropping away the
+   interesting part of the picture. This checks each photo's
+   real size once it loads and, only when the mismatch with
+   its frame is big enough that cover would lose too much of
+   it, switches that frame to "contain" (full photo visible,
+   softly letterboxed) instead of cropping it.
+========================================================= */
+
+function smartFitBackground(el) {
+
+    if (!el || el.dataset.smartFitDone === "1") {
+        return;
+    }
+
+    const bgImage =
+        el.style.backgroundImage || getComputedStyle(el).backgroundImage;
+
+    const match =
+        bgImage && bgImage.match(/url\(["']?(.*?)["']?\)/);
+
+    if (!match || !match[1]) {
+        return;
+    }
+
+    const url = match[1];
+
+    const probe = new Image();
+
+    probe.onload = function () {
+
+        if (!probe.naturalWidth || !probe.naturalHeight) {
+            return;
+        }
+
+        const containerWidth = el.clientWidth || 1;
+        const containerHeight = el.clientHeight || 1;
+
+        const containerRatio = containerWidth / containerHeight;
+        const imageRatio = probe.naturalWidth / probe.naturalHeight;
+
+        const mismatch =
+            Math.abs(containerRatio - imageRatio) /
+            Math.max(containerRatio, imageRatio);
+
+        // Big mismatch (very tall/portrait photo in a wide frame,
+        // or the opposite) → show the full photo instead of
+        // cropping it away.
+        if (mismatch > 0.4) {
+
+            el.style.backgroundSize = "contain";
+            el.style.backgroundRepeat = "no-repeat";
+
+            if (!el.style.backgroundColor) {
+                el.style.backgroundColor = "#ECE7DD";
+            }
+
+        } else {
+
+            el.style.backgroundSize = "cover";
+
+        }
+
+        el.dataset.smartFitDone = "1";
+
+    };
+
+    probe.onerror = function () {
+        // Photo not found on disk yet — leave the default
+        // "cover" styling as-is, nothing to fit.
+    };
+
+    probe.src = url;
+
+}
+
+
+function applySmartFitToAll(root) {
+
+    const scope = root || document;
+
+    scope
+        .querySelectorAll(
+            [
+                ".photo-portrait",
+                ".chapter-carousel-slide",
+                ".korea-carousel-slide",
+                ".destination-carousel-slide",
+                ".global-image",
+                ".final-photo"
+            ].join(", ")
+        )
+        .forEach(smartFitBackground);
+
+}
+
+
+/* =========================================================
    PRESENTATION NAVIGATION
 ========================================================= */
 
@@ -2634,6 +2742,15 @@ let currentSlide = 0;
 // previous), so the journey plane can face the right way.
 let navDirection = 1;
 let journeyInitialized = false;
+
+// How long the slide's own fade/slide-in transition takes
+// (matches ".slide { transition: opacity .65s ease, ... }").
+// Content animations (plane flight, timeline reveal, carousel
+// resets) wait until this finishes before starting, so they
+// don't fire on top of the slide still sliding into place.
+const SLIDE_TRANSITION_MS = 650;
+
+let slideAnimTimeout = null;
 
 
 /*
@@ -2732,25 +2849,47 @@ function showSlide(index) {
     updateJourneyPlane();
 
 
-    if (currentSlide === 1) {
-
-        startTravelAnimation();
-
-    } else {
-
+    // Stop / reset whatever isn't for the slide we're leaving
+    // right away, so nothing keeps animating off-screen.
+    if (currentSlide !== 1) {
         stopTravelAnimation();
-
     }
 
-    if (currentSlide === 2) {
-
-        startChapterAnimation();
-
-    } else {
-
+    if (currentSlide !== 2) {
         resetChapterAnimation();
-
     }
+
+
+    // Start this slide's own animations only once the slide
+    // has finished sliding/fading into place, so everything
+    // appears in a clean sequence instead of firing all at
+    // once while the slide is still moving.
+    clearTimeout(slideAnimTimeout);
+
+    slideAnimTimeout = setTimeout(() => {
+
+        if (currentSlide === 1) {
+            startTravelAnimation();
+        }
+
+        if (currentSlide === 2) {
+            startChapterAnimation();
+        }
+
+        if (currentSlide === 2 && chapter2Carousel) {
+            chapter2Carousel.reset();
+        }
+
+        if (currentSlide === 3) {
+            updateKoreaCarousel(0);
+            restartKoreaCarouselTimer();
+        }
+
+        if (currentSlide === 4 && chapter4Carousel) {
+            chapter4Carousel.reset();
+        }
+
+    }, SLIDE_TRANSITION_MS);
 
 }
 
@@ -3257,6 +3396,13 @@ function openDestination(destinationName) {
 
         slide.style.backgroundImage =
             `url("${destination.images[i]}")`;
+
+        // Freshly-swapped photo — let the smart-fit check
+        // decide again whether this one needs to be
+        // letterboxed instead of cropped.
+        delete slide.dataset.smartFitDone;
+
+        smartFitBackground(slide);
 
     });
 
@@ -3889,7 +4035,7 @@ function initChapterCarousel(config) {
         document.getElementById(config.nextId);
 
     if (!carousel || !track || !slides.length) {
-        return;
+        return null;
     }
 
     let index = 0;
@@ -3935,6 +4081,16 @@ function initChapterCarousel(config) {
 
     function goPrevious() {
         update(index - 1);
+        restartTimer();
+    }
+
+    // Brings this carousel back to its first photo and
+    // restarts its 5s auto-advance — used every time the
+    // slide that owns it becomes active, so it always starts
+    // from a known, tidy state instead of wherever it drifted
+    // to while off-screen.
+    function reset() {
+        update(0);
         restartTimer();
     }
 
@@ -3988,10 +4144,12 @@ function initChapterCarousel(config) {
 
     // One photo every 5 seconds.
     restartTimer();
+
+    return { update, restartTimer, reset };
 }
 
 
-initChapterCarousel({
+const chapter2Carousel = initChapterCarousel({
     carouselId: "chapter2Carousel",
     trackId: "chapter2CarouselTrack",
     dotsId: "chapter2CarouselDots",
@@ -4004,7 +4162,7 @@ initChapterCarousel({
 });
 
 
-initChapterCarousel({
+const chapter4Carousel = initChapterCarousel({
     carouselId: "chapter4Carousel",
     trackId: "chapter4CarouselTrack",
     dotsId: "chapter4CarouselDots",
@@ -4159,6 +4317,8 @@ function resetChapterAnimation() {
     timelineRunner.style.opacity = 0;
     timelineRunner.style.transition = "none";
 
+    chapterCurrentPhotoIndex = 0;
+
 }
 
 
@@ -4290,6 +4450,10 @@ function highlightTimelineItem(index) {
 ========================================================= */
 
 showSlide(0);
+
+applySmartFitToAll();
+
+window.addEventListener("load", () => applySmartFitToAll());
 
 
 /*
